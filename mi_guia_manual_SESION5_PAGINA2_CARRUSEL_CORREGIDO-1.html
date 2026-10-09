@@ -1,0 +1,3552 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Mi guía - Manual interactivo</title>
+<style>
+*{box-sizing:border-box}
+:root{
+--azul:#8fc9df;
+--azul-osc:#4f91ad;
+--azul-claro:#eaf7fb;
+--azul-palido:#dff1f7;
+--beige:#ead8b5;
+--beige-claro:#f5ead3;
+--texto:#3f6472;
+--blanco:#fff;
+}
+body{
+margin:0;
+min-height:100vh;
+font-family:"Trebuchet MS",Arial,sans-serif;
+color:var(--texto);
+background:linear-gradient(135deg,#dbeef5 0%,#f5ead5 48%,#fff 100%);
+}
+button,input{font:inherit}
+button{cursor:pointer}
+
+header{
+width:100%;
+min-height:92px;
+background:linear-gradient(90deg,#e7f5f9,#fff7e8,#eaf7fb);
+border-bottom:2px dashed #9fc8d6;
+display:grid;
+grid-template-columns:90px 1fr 90px;
+align-items:center;
+gap:18px;
+padding:15px 28px;
+}
+.logo{
+width:54px;height:54px;border-radius:50%;
+display:flex;align-items:center;justify-content:center;
+background:var(--beige-claro);
+border:2px solid var(--beige);
+color:var(--azul-osc);
+font-size:11px;font-weight:bold;
+margin:auto;
+}
+.buscador{width:min(720px,90%);margin:auto}
+.buscador input{
+width:100%;height:40px;border:2px dashed #a8c9d5;
+border-radius:22px;padding:0 20px;outline:none;
+background:#fff;color:var(--texto);
+box-shadow:0 3px 10px rgba(68,110,125,.10);
+transition:.2s;
+}
+.buscador input:focus{
+border-color:var(--azul-osc);
+box-shadow:0 0 0 3px rgba(143,201,223,.25)
+}
+
+nav{
+background:linear-gradient(90deg,#e7f5f9,#fff7e8,#eaf7fb);
+border-bottom:2px dashed #9fc8d6;
+display:flex;justify-content:center;align-items:center;
+gap:10px;padding:12px 18px;
+position:relative;z-index:20;
+}
+nav>button,.boton-sesiones{
+border:2px dashed #9fc8d6;
+background:linear-gradient(135deg,#edf8fb,#fffaf0);
+color:#527b89;padding:10px 17px;border-radius:14px;
+font-size:14px;
+box-shadow:0 2px 5px rgba(70,105,118,.06);
+transition:.2s;
+}
+nav>button:hover,.boton-sesiones:hover,
+nav>button.activo,.boton-sesiones.abierto{
+background:var(--azul-palido);
+border-color:#b8d9e4;
+color:#3e7487;
+transform:translateY(-1px);
+}
+.menu-sesiones{position:relative}
+.flecha{font-size:10px;margin-left:4px;transition:.2s}
+.boton-sesiones.abierto .flecha{
+transform:rotate(180deg);display:inline-block
+}
+.submenu{
+display:none;
+position:absolute;
+top:calc(100% + 5px);
+left:50%;
+transform:translateX(-50%);
+width:155px;
+background:#fff;
+border:2px dashed #b8cbd1;
+border-radius:14px;
+padding:6px;
+box-shadow:0 8px 20px rgba(60,100,115,.15)
+}
+.submenu.abierto{
+display:flex;
+flex-direction:column;
+gap:2px;
+animation:drop .18s ease
+}
+.submenu button{
+border:0;
+background:transparent;
+color:#527b89;
+padding:9px;
+border-radius:9px;
+text-align:left;
+}
+.submenu button:hover,.submenu button.seleccionado{
+background:#eaf7fb;
+color:#3e7487;
+}
+@keyframes drop{
+from{opacity:0;transform:translate(-50%,-5px)}
+to{opacity:1;transform:translate(-50%,0)}
+}
+
+main{
+width:min(1180px,94%);
+margin:25px auto 95px;
+}
+.pantalla{
+display:none;
+animation:aparecer .35s ease;
+}
+.pantalla.activa{display:block}
+@keyframes aparecer{
+from{opacity:0;transform:translateY(8px)}
+to{opacity:1;transform:translateY(0)}
+}
+
+.inicio{
+min-height:570px;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+.bienvenida{
+width:min(850px,95%);
+text-align:center;
+padding:65px 35px;
+background:rgba(255,255,255,.72);
+border:3px dashed #a8cbd7;
+border-radius:32px;
+box-shadow:0 12px 30px rgba(67,104,118,.10);
+}
+.bienvenida h1{
+font-size:52px;
+margin:0 0 15px;
+color:#5c9ab0;
+animation:flotar 2.8s ease-in-out infinite;
+}
+.bienvenida p{
+font-size:19px;
+line-height:1.7;
+margin:8px auto;
+max-width:700px;
+}
+@keyframes flotar{
+0%,100%{transform:translateY(0)}
+50%{transform:translateY(-7px)}
+}
+
+.titulo-seccion{
+text-align:center;
+margin:10px 0 22px;
+}
+.titulo-seccion h2{
+margin:0;
+font-size:35px;
+color:#5b95aa;
+}
+.titulo-seccion p{
+margin:7px 0 0;
+color:#718f99;
+}
+
+.tarjetas{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:18px;
+}
+.tarjeta{
+background:rgba(255,255,255,.82);
+border:2px dashed #a9c9d4;
+border-radius:22px;
+padding:24px;
+box-shadow:0 7px 18px rgba(64,102,117,.08);
+}
+.tarjeta h3{margin-top:0;color:#5b95aa}
+.tarjeta p{line-height:1.6}
+
+.contenedor-manual{
+background:rgba(255,255,255,.75);
+border:2px dashed #a9c9d4;
+border-radius:28px;
+padding:28px;
+box-shadow:0 10px 25px rgba(65,100,115,.08);
+}
+.contenedor-manual h2{
+margin-top:0;color:#5b95aa;text-align:center
+}
+.contenedor-manual p{line-height:1.7}
+.lista-iconos{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+gap:14px;margin-top:20px;
+}
+.icono-item{
+background:#fffaf0;
+border:2px dashed #d8c49b;
+border-radius:17px;
+padding:16px;
+}
+.icono-item strong{color:#5b95aa}
+
+.sesiones-panel{
+display:grid;
+grid-template-columns:210px 1fr;
+gap:22px;
+}
+.lista-sesiones{
+background:rgba(255,255,255,.76);
+border:2px dashed #a9c9d4;
+border-radius:24px;
+padding:15px;
+height:max-content;
+}
+.lista-sesiones button{
+width:100%;
+border:2px dashed #b6d0d8;
+background:#fff;
+border-radius:13px;
+padding:12px;
+margin-bottom:9px;
+color:#527b89;
+text-align:left;
+}
+.lista-sesiones button:hover,
+.lista-sesiones button.activo{
+background:#eaf7fb;
+border-color:#8fc9df;
+}
+.sesion-contenido{
+background:rgba(255,255,255,.82);
+border:2px dashed #a9c9d4;
+border-radius:28px;
+padding:28px;
+min-height:500px;
+}
+.sesion-contenido h2{
+margin:0 0 7px;
+color:#5b95aa;
+font-size:30px;
+}
+.sesion-contenido .numero{
+color:#9c8b63;
+font-size:14px;
+margin-bottom:22px;
+}
+.pagina{
+display:none;
+}
+.pagina.activa{
+display:block;
+animation:aparecer .3s ease;
+}
+.pagina h3{
+color:#5b95aa;
+font-size:25px;
+margin:0 0 14px;
+}
+.pagina p{
+line-height:1.75;
+font-size:16px;
+}
+.caja-destacada{
+background:#fff8e9;
+border-left:5px solid #d8c49b;
+border-radius:13px;
+padding:15px 18px;
+margin:18px 0;
+}
+.caja-destacada strong{color:#8e7a50}
+
+.contenido-imagen{
+display:grid;
+grid-template-columns:43% 57%;
+gap:25px;
+align-items:center;
+margin-top:20px;
+}
+.carrusel-marco{
+position:relative;
+background:#eef8fb;
+border:2px dashed #a9c9d4;
+border-radius:22px;
+padding:12px;
+overflow:hidden;
+}
+.carrusel-marco img{
+width:100%;
+height:300px;
+object-fit:cover;
+display:block;
+border-radius:15px;
+cursor:zoom-in;
+transition:.25s;
+}
+.carrusel-marco img:hover{
+transform:scale(1.015);
+}
+.flecha-carrusel{
+position:absolute;
+top:50%;
+transform:translateY(-50%);
+width:40px;
+height:40px;
+border-radius:50%;
+border:2px solid rgba(255,255,255,.9);
+background:rgba(255,255,255,.88);
+color:#527b89;
+font-size:27px;
+line-height:1;
+z-index:2;
+box-shadow:0 3px 10px rgba(50,90,105,.15);
+}
+.flecha-carrusel:hover{
+background:#fff;
+transform:translateY(-50%) scale(1.05);
+}
+.flecha-carrusel.izquierda{left:20px}
+.flecha-carrusel.derecha{right:20px}
+
+.controles-carrusel{
+display:flex;
+justify-content:center;
+align-items:center;
+gap:8px;
+margin-top:11px;
+}
+.punto{
+width:10px;
+height:10px;
+padding:0;
+border-radius:50%;
+border:1px solid #8fb8c7;
+background:#fff;
+}
+.punto.activo{
+background:#8fc9df;
+transform:scale(1.25);
+}
+.indicador-imagen{
+text-align:center;
+font-size:12px;
+color:#77909a;
+margin-top:8px;
+}
+
+
+/* Estrellas al escribir en los recuadros de la página 3 de la Sesión 3 */
+.actividad-collage-sesion3-pagina3{
+
+position:relative;
+overflow:visible;
+}
+.estrella-escritura{
+position:absolute;
+pointer-events:none;
+font-size:34px;
+line-height:1;
+z-index:20;
+text-shadow:0 0 5px rgba(255,255,255,.9);
+animation:aparecerEstrellaEscritura 1.05s ease-out forwards;
+}
+@keyframes aparecerEstrellaEscritura{
+0%{opacity:0;transform:translate(0,10px) scale(.25) rotate(0deg);}
+20%{opacity:1;transform:translate(0,0) scale(1.15) rotate(10deg);}
+100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(1.65) rotate(45deg);}
+}
+
+.imagen-grande-sesion3-pagina2{
+display:block !important;
+width:100%;
+margin:25px auto 0;
+}
+.imagen-grande-sesion3-pagina2 .carrusel-marco{
+width:min(92%,1000px);
+margin:0 auto;
+padding:12px;
+border:none;
+background:transparent;
+box-shadow:none;
+}
+.imagen-grande-sesion3-pagina2 .carrusel-marco img{
+width:100%;
+height:auto;
+max-height:none;
+object-fit:contain;
+border-radius:15px;
+cursor:zoom-in;
+transform:none !important;
+}
+.info-imagen h3{
+margin-top:0;
+}
+.info-imagen p{
+font-size:16px;
+line-height:1.8;
+}
+
+/* Actividad 1 fija de la página 4 de la Sesión 1 */
+.actividad-fija-sesion1-pagina4{
+display:none;
+background:#ffffff;
+border:2px solid #b9dff0;
+border-radius:18px;
+padding:18px;
+box-shadow:0 4px 14px rgba(70,120,145,.10);
+}
+.actividad-fija-sesion1-pagina4 h3{
+margin:0 0 12px;
+color:#8fc9df;
+font-size:22px;
+font-weight:800;
+}
+.actividad-fija-sesion1-pagina4 p{
+margin:0 0 14px;
+font-size:16px;
+line-height:1.7;
+color:#527b89;
+}
+.actividad-fija-sesion1-pagina4 textarea{
+width:100%;
+min-height:150px;
+box-sizing:border-box;
+resize:vertical;
+border:2px solid #b9dff0;
+border-radius:14px;
+padding:12px;
+font:inherit;
+font-size:15px;
+background:#fafdff;
+color:#35515c;
+outline:none;
+}
+.actividad-fija-sesion1-pagina4 textarea:focus{
+border-color:#8fc9df;
+box-shadow:0 0 0 3px rgba(143,201,223,.18);
+}
+
+.perfil-comparacion-sesion3{
+margin-top:22px;
+}
+.perfil-comparacion-instrucciones{
+background:#fffdf7;
+border:2px dashed #a9c9d4;
+border-radius:18px;
+padding:16px 18px;
+margin-bottom:20px;
+}
+.perfil-comparacion-instrucciones p{
+margin:0 0 12px;
+font-size:15px;
+line-height:1.65;
+color:#527b89;
+}
+.perfil-comparacion-instrucciones p:last-child{
+margin-bottom:0;
+}
+.perfil-comparacion-instrucciones .instruccion-izquierda{
+color:#e7a22d;
+font-weight:700;
+}
+.perfil-comparacion-instrucciones .instruccion-derecha{
+color:#7acb91;
+font-weight:700;
+}
+.perfil-comparacion-cuadros{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:22px;
+}
+.perfil-cuadro{
+background:#fff;
+border-radius:22px;
+padding:12px;
+}
+.perfil-cuadro.izquierda{
+border:4px solid #e7a22d;
+}
+.perfil-cuadro.derecha{
+border:4px solid #7acb91;
+}
+.perfil-cuadro h4{
+margin:0 0 10px;
+font-size:15px;
+font-weight:700;
+color:#527b89;
+}
+.perfil-cuadro textarea{
+width:100%;
+min-height:230px;
+box-sizing:border-box;
+resize:vertical;
+border:0;
+outline:none;
+background:transparent;
+font:inherit;
+font-size:15px;
+line-height:1.6;
+color:#527b89;
+padding:8px;
+}
+
+.actividad-collage-sesion3-pagina3{
+width:100%;
+margin:20px auto 0;
+font-family:inherit;
+}
+.actividad-collage-sesion3-pagina3 .collage-encabezado h2{
+margin:0 0 22px;
+text-align:center;
+font-size:clamp(1.7rem,4vw,2.5rem);
+font-weight:800;
+color:#3975d3;
+}
+.collage-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:22px;
+}
+.collage-bloque{
+box-sizing:border-box;
+}
+.collage-bloque h3{
+margin:0 0 5px;
+font-size:1.05rem;
+font-weight:800;
+}
+.collage-bloque p{
+margin:0 0 9px;
+font-size:.9rem;
+line-height:1.25;
+font-weight:600;
+}
+.collage-bloque textarea{
+box-sizing:border-box;
+width:100%;
+min-height:155px;
+resize:vertical;
+padding:18px;
+font:inherit;
+font-size:1rem;
+line-height:1.45;
+background:rgba(255,255,255,.82);
+border-width:2px;
+border-style:dashed;
+border-radius:24px;
+outline:none;
+}
+.collage-bloque textarea:focus{
+box-shadow:0 0 0 3px rgba(0,0,0,.07);
+}
+.collage-valores h3,.collage-valores p{color:#8b4ba1;}
+.collage-valores textarea{border-color:#a36ab5;}
+.collage-intereses h3,.collage-intereses p{color:#d69b42;}
+.collage-intereses textarea{border-color:#e0b467;}
+.collage-capacidades h3,.collage-capacidades p{color:#3d9bd1;}
+.collage-capacidades textarea{border-color:#67b6df;}
+.collage-historia h3,.collage-historia p{color:#8bb34f;}
+.collage-historia textarea{border-color:#9fc36d;}
+.collage-meta{margin-top:22px;}
+.collage-meta h3,.collage-meta p{color:#559b7d;}
+.collage-meta textarea{min-height:105px;border-color:#77ae94;}
+.collage-reflexion{margin-top:22px;}
+.collage-reflexion h3,.collage-reflexion p{color:#dc9a76;}
+.collage-reflexion textarea{min-height:125px;border-color:#e2aa8b;}
+@media(max-width:760px){
+.collage-grid{grid-template-columns:1fr;gap:18px;}
+.collage-bloque textarea{min-height:135px;}
+}
+/* Página 4 · Post para mí yo del futuro */
+.actividad-post-futuro-sesion3-pagina4{
+width:100%;
+margin:18px auto 0;
+font-family:inherit;
+color:#426b83;
+position:relative;
+overflow:visible;
+}
+.post-futuro-perfil{
+display:grid;
+grid-template-columns:220px 1fr;
+gap:22px;
+align-items:center;
+margin-bottom:20px;
+}
+.post-futuro-foto{text-align:center;}
+#canvasFotoFuturo{
+width:180px;
+height:180px;
+border-radius:50%;
+border:4px solid #8ecae6;
+background:#f4fbff;
+box-sizing:border-box;
+cursor:crosshair;
+touch-action:none;
+}
+.foto-futuro-botones{display:flex;flex-wrap:wrap;justify-content:center;gap:7px;margin-top:8px;}
+.post-futuro-boton{
+border:2px solid #9bd3ea;
+background:#eaf8ff;
+color:#397a9d;
+padding:7px 9px;
+border-radius:10px;
+font-size:12px;
+cursor:pointer;
+}
+.post-futuro-identidad{min-width:0;}
+.post-futuro-linea{display:flex;gap:8px;align-items:center;margin-bottom:8px;color:#4d7890;font-weight:700;}
+.post-futuro-linea label{white-space:nowrap;}
+.post-futuro-linea input{flex:1;border:0;border-bottom:2px solid #9bcfe5;background:transparent;padding:6px;color:#426b83;outline:none;font:inherit;}
+.post-futuro-frase{font-size:clamp(1.35rem,3.4vw,2rem);font-weight:900;color:#4b8fbd;margin-top:10px;}
+.post-futuro-identidad p{margin:7px 0 0;line-height:1.45;color:#5c7f92;font-size:.9rem;}
+.post-futuro-cuadros{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.post-futuro-cuadro{background:#fff;border-radius:16px;padding:13px;border:3px solid;box-sizing:border-box;box-shadow:0 3px 10px rgba(70,130,160,.08);}
+.post-futuro-cuadro.azul1{border-color:#78bfe0;}
+.post-futuro-cuadro.azul2{border-color:#91cfe8;}
+.post-futuro-cuadro.azul3{border-color:#72b5d6;}
+.post-futuro-cuadro.azul4{border-color:#a4d9ed;}
+.post-futuro-cuadro h4{margin:0 0 5px;font-size:.93rem;font-weight:900;color:#4388ae;}
+.post-futuro-cuadro p{margin:0 0 8px;font-size:.78rem;line-height:1.3;color:#5b7d8e;font-weight:600;}
+.post-futuro-cuadro textarea,
+.post-futuro-mensaje textarea{
+width:100%;box-sizing:border-box;resize:vertical;border:0;border-top:2px dashed #c1e2ef;background:#fbfeff;outline:none;color:#426b83;font:inherit;font-size:.95rem;line-height:1.45;padding:10px;min-height:115px;border-radius:8px;
+}
+.post-futuro-cuadro textarea:focus,.post-futuro-mensaje textarea:focus{box-shadow:0 0 0 3px rgba(117,190,222,.18);}
+.post-futuro-mensaje{margin-top:14px;border:3px solid #8ccce6;border-radius:16px;background:#fff;padding:13px;}
+.post-futuro-mensaje h4{margin:0 0 6px;color:#4c91b9;font-size:.93rem;font-weight:900;}
+.post-futuro-mensaje textarea{min-height:105px;border-top:2px dashed #b9deec;}
+.post-futuro-envio{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin-top:15px;padding:12px;border-radius:14px;background:#edf9fe;border:2px dashed #9dd5e9;}
+.post-futuro-envio label{font-weight:800;color:#397a9d;}
+.post-futuro-envio input{flex:1;min-width:210px;border:2px solid #a6d8e9;border-radius:9px;padding:9px;background:#fff;outline:none;color:#426b83;}
+.post-futuro-envio button{border:2px solid #72b7d8;border-radius:10px;padding:9px 13px;background:#dff4fc;color:#397a9d;font-weight:800;cursor:pointer;}
+.post-futuro-aviso{font-size:11px!important;color:#7693a2!important;text-align:center;margin:7px 0 0!important;line-height:1.4!important;}
+@media(max-width:760px){
+.post-futuro-perfil{grid-template-columns:1fr;}
+.post-futuro-cuadros{grid-template-columns:1fr;gap:12px;}
+#canvasFotoFuturo{width:155px;height:155px;}
+.post-futuro-envio{align-items:stretch;}
+.post-futuro-envio input,.post-futuro-envio button{width:100%;box-sizing:border-box;}
+}
+
+.area-actividad-sesion1{
+margin-top:20px;
+background:#fffdf7;
+border:2px dashed #a9c9d4;
+border-radius:18px;
+padding:16px;
+}
+.area-actividad-sesion1 label{
+display:block;
+color:#527b89;
+font-weight:700;
+font-size:15px;
+line-height:1.5;
+margin-bottom:10px;
+}
+.area-actividad-sesion1 textarea{
+width:100%;
+min-height:110px;
+resize:vertical;
+box-sizing:border-box;
+border:2px solid #d8c49b;
+border-radius:12px;
+padding:12px;
+font:inherit;
+color:#527b89;
+background:#fff;
+outline:none;
+}
+.area-actividad-sesion1 textarea:focus{
+border-color:#8fc9df;
+box-shadow:0 0 0 3px rgba(143,201,223,.18);
+}
+
+/* Plantilla editable de la Actividad 3 de la Sesión 1. */
+.instrucciones-actividad3-sesion1{margin-top:16px;background:#f7fbfd;border-left:5px solid #8fc9df;border-radius:12px;padding:12px 14px;color:#425f6c;}
+.instrucciones-actividad3-sesion1 p{margin:7px 0;font-size:15px;line-height:1.55;}
+.plantilla-actividad3-sesion1{margin-top:16px;background:#fffdf7;border:2px dashed #a9c9d4;border-radius:18px;padding:14px;box-sizing:border-box;}
+.plantilla-actividad3-marco{position:relative;width:100%;line-height:0;}
+.plantilla-actividad3-marco>img{display:block;width:100%;height:auto;border-radius:10px;}
+.plantilla-actividad3-marco .dialogo{position:absolute;box-sizing:border-box;resize:none;overflow:auto;border:0;background:transparent;padding:8px 12px;font:600 13px/1.25 Arial,sans-serif;color:#527b89;text-align:center;outline:none;overflow-wrap:anywhere;}
+.plantilla-actividad3-marco .dialogo::placeholder{color:rgba(82,123,137,.55);}
+.plantilla-actividad3-marco .dialogo:focus{border:0;background:transparent;box-shadow:none;}
+.dialogo-1{left:12%;top:2%;width:38%;height:27%;}
+.dialogo-2{left:57%;top:2%;width:38%;height:27%;}
+.dialogo-3{left:1%;top:57%;width:27%;height:20%;}
+.dialogo-4{left:25%;top:56%;width:27%;height:21%;}
+.dialogo-5{left:58%;top:55%;width:37%;height:24%;}
+@media(max-width:700px){.plantilla-actividad3-sesion1{padding:8px;}.plantilla-actividad3-marco .dialogo{font-size:9px;line-height:1.2;padding:4px 6px;}}
+
+.instruccion-tabla-pagina4{
+margin:0 0 14px;
+font-size:15px;
+line-height:1.6;
+color:#527b89;
+font-weight:600;
+}
+
+.tabla-pagina4{
+margin-top:20px;
+background:#fffdf7;
+border:2px dashed #a9c9d4;
+border-radius:18px;
+padding:14px;
+overflow-x:auto;
+}
+.tabla-pagina4 table{
+width:100%;
+border-collapse:collapse;
+font-size:15px;
+background:#fff;
+}
+.tabla-pagina4 th,
+.tabla-pagina4 td{
+border:1.5px solid #9fb5bc;
+padding:12px 14px;
+vertical-align:middle;
+}
+.tabla-pagina4 th{
+background:#eef8fb;
+color:#527b89;
+font-weight:700;
+text-align:left;
+}
+.tabla-pagina4 th:last-child,
+.tabla-pagina4 td:last-child{
+width:105px;
+text-align:center;
+font-size:22px;
+white-space:nowrap;
+}
+.selector-emoji{font-size:1.35rem;padding:.25rem .4rem;border:1px solid #b9d7df;border-radius:8px;background:#fff;cursor:pointer;text-align:center;}
+.tabla-pagina4 td:first-child{
+line-height:1.45;
+}
+
+.navegacion-pagina{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:12px;
+margin-top:30px;
+padding-top:20px;
+border-top:2px dashed #c4d8de;
+}
+.navegacion-pagina button{
+border:2px dashed #a8c9d5;
+background:#fffaf0;
+color:#527b89;
+padding:10px 18px;
+border-radius:13px;
+}
+.navegacion-pagina button:hover{
+background:#eaf7fb;
+}
+.indicador-pagina{
+font-size:14px;
+color:#718c96;
+}
+
+footer{
+position:fixed;
+bottom:0;
+left:0;
+width:100%;
+min-height:58px;
+background:rgba(255,250,240,.96);
+border-top:2px dashed #cbbd9f;
+display:grid;
+grid-template-columns:1fr auto 1fr;
+align-items:center;
+padding:8px 24px;
+z-index:30;
+}
+footer .boton{
+justify-self:start;
+}
+footer .footer-centro{
+justify-self:center;
+font-size:13px;
+color:#78909a;
+}
+#ubicacion{
+justify-self:end;
+font-size:12px;
+color:#78909a;
+}
+
+.boton{
+border:2px dashed #b8cbd1;
+background:#fff;
+color:#527b89;
+padding:9px 15px;
+border-radius:12px;
+}
+.boton:hover{
+background:#eaf7fb;
+}
+
+.modal-imagen{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(25,50,60,.45);
+backdrop-filter:blur(9px);
+-webkit-backdrop-filter:blur(9px);
+z-index:100;
+align-items:center;
+justify-content:center;
+padding:30px;
+}
+.modal-imagen.abierto{
+display:flex;
+}
+.modal-contenido{
+position:relative;
+max-width:min(900px,90vw);
+max-height:90vh;
+display:flex;
+flex-direction:column;
+align-items:center;
+}
+.modal-contenido img{
+max-width:100%;
+max-height:78vh;
+object-fit:contain;
+border:5px solid #fff;
+border-radius:18px;
+box-shadow:0 15px 45px rgba(0,0,0,.35);
+}
+.modal-cerrar{
+position:absolute;
+right:-18px;
+top:-18px;
+width:42px;
+height:42px;
+border:2px solid #fff;
+border-radius:50%;
+background:#fff;
+color:#527b89;
+font-size:29px;
+line-height:30px;
+z-index:4;
+box-shadow:0 4px 12px rgba(0,0,0,.2);
+}
+.modal-cerrar:hover{
+transform:scale(1.05);
+}
+.modal-texto{
+margin-top:10px;
+padding:8px 15px;
+background:rgba(255,255,255,.9);
+border-radius:15px;
+font-size:14px;
+color:#527b89;
+}
+.modal-flecha{
+position:fixed;
+top:50%;
+transform:translateY(-50%);
+width:48px;
+height:48px;
+border-radius:50%;
+border:2px solid #fff;
+background:rgba(255,255,255,.9);
+color:#527b89;
+font-size:32px;
+z-index:103;
+}
+.modal-flecha:hover{
+background:#fff;
+}
+.modal-flecha.izquierda{left:25px}
+.modal-flecha.derecha{right:25px}
+
+.resultados-busqueda{
+display:none;
+position:absolute;
+top:82px;
+left:50%;
+transform:translateX(-50%);
+width:min(720px,90%);
+background:#fff;
+border:2px dashed #b7ccd4;
+border-radius:16px;
+padding:8px;
+box-shadow:0 10px 25px rgba(50,90,105,.15);
+z-index:50;
+}
+.resultados-busqueda.visible{
+display:block;
+}
+.resultado{
+padding:11px 13px;
+border-radius:10px;
+cursor:pointer;
+}
+.resultado:hover{
+background:#eaf7fb;
+}
+.resultado strong{
+display:block;
+color:#5b95aa;
+}
+.resultado small{
+color:#718c96;
+}
+
+@media(max-width:800px){
+header{
+grid-template-columns:60px 1fr 20px;
+padding:12px;
+}
+.logo{
+width:48px;height:48px;
+}
+nav{
+overflow-x:auto;
+justify-content:flex-start;
+}
+nav>button,.boton-sesiones{
+white-space:nowrap;
+padding:9px 12px;
+}
+.sesiones-panel{
+grid-template-columns:1fr;
+}
+.lista-sesiones{
+display:flex;
+gap:8px;
+overflow-x:auto;
+}
+.lista-sesiones button{
+min-width:130px;
+margin:0;
+}
+.contenido-imagen{
+grid-template-columns:1fr;
+}
+.perfil-comparacion-cuadros{
+grid-template-columns:1fr;
+}
+.carrusel-marco img{
+height:270px;
+}
+footer{
+grid-template-columns:auto 1fr auto;
+padding:8px 10px;
+}
+footer .footer-centro{
+display:none;
+}
+}
+
+/* Tipografías especiales para la página 4 de la Sesión 3 */
+.post-futuro-sesion3-pagina4{
+font-family:"Trebuchet MS",Arial,sans-serif;
+}
+.post-futuro-sesion3-pagina4 h1,
+.post-futuro-sesion3-pagina4 h2{
+font-family:Georgia,"Times New Roman",serif;
+letter-spacing:.2px;
+}
+.post-futuro-sesion3-pagina4 .post-titulo{
+font-family:"Trebuchet MS",Arial,sans-serif;
+font-weight:800;
+letter-spacing:.5px;
+}
+.post-futuro-sesion3-pagina4 .post-subtitulo{
+font-family:"Courier New",monospace;
+font-weight:700;
+letter-spacing:.3px;
+}
+.post-futuro-sesion3-pagina4 label,
+.post-futuro-sesion3-pagina4 .post-pregunta{
+font-family:"Trebuchet MS",Arial,sans-serif;
+}
+.post-futuro-sesion3-pagina4 textarea,
+.post-futuro-sesion3-pagina4 input{
+font-family:"Verdana",Arial,sans-serif;
+}
+
+
+/* Paleta solicitada para la página 4 de la Sesión 3 */
+.post-futuro-sesion3-pagina4{
+  --merino:#F5EEDD;
+  --rock-blue:#84B3CE;
+  --venice-blue:#16587B;
+  background:var(--merino);
+  color:var(--venice-blue);
+  font-family:"More Sugar", cursive;
+}
+.post-futuro-sesion3-pagina4 .post-titulo,
+.post-futuro-sesion3-pagina4 .post-subtitulo,
+.post-futuro-sesion3-pagina4 h1,
+.post-futuro-sesion3-pagina4 h2,
+.post-futuro-sesion3-pagina4 h3,
+.post-futuro-sesion3-pagina4 label,
+.post-futuro-sesion3-pagina4 .post-pregunta{
+  font-family:"More Sugar", cursive !important;
+  color:var(--venice-blue) !important;
+}
+.post-futuro-sesion3-pagina4 textarea,
+.post-futuro-sesion3-pagina4 input[type="text"],
+.post-futuro-sesion3-pagina4 input[type="email"]{
+  font-family:"Adam Script","Brush Script MT",cursive !important;
+  color:var(--venice-blue) !important;
+  background:var(--merino) !important;
+}
+.post-futuro-sesion3-pagina4 .post-recuadro{
+  background:var(--merino) !important;
+  border-color:var(--rock-blue) !important;
+}
+.post-futuro-sesion3-pagina4 .post-recuadro:nth-child(2n){
+  border-color:var(--rock-blue) !important;
+}
+.post-futuro-sesion3-pagina4 .post-recuadro .icono,
+.post-futuro-sesion3-pagina4 .post-icono,
+.post-futuro-sesion3-pagina4 .post-decoracion{
+  color:var(--venice-blue) !important;
+  background:var(--rock-blue) !important;
+}
+.post-futuro-sesion3-pagina4 .post-linea,
+.post-futuro-sesion3-pagina4 hr{
+  border-color:var(--rock-blue) !important;
+}
+.post-futuro-sesion3-pagina4 button{
+  background:var(--rock-blue) !important;
+  border-color:var(--venice-blue) !important;
+  color:var(--merino) !important;
+}
+.post-futuro-sesion3-pagina4 button:hover{
+  background:var(--venice-blue) !important;
+}
+.post-futuro-sesion3-pagina4 .estrella-post-futuro{
+  color:var(--venice-blue);
+}
+
+
+/* Tipografías solicitadas: se usan si están disponibles en el dispositivo */
+@font-face{
+  font-family:"More Sugar";
+  src:local("More Sugar");
+  font-display:swap;
+}
+@font-face{
+  font-family:"Adam Script";
+  src:local("Adam Script");
+  font-display:swap;
+}
+
+
+/* Corrección visual final — plantilla página 4, Sesión 3 */
+#actividadPostFuturoSesion3Pagina4,
+.post-futuro-sesion3-pagina4{
+  --merino:#F5EEDD !important;
+  --rock-blue:#84B3CE !important;
+  --venice-blue:#16587B !important;
+  background:#F5EEDD !important;
+  color:#16587B !important;
+  font-family:"More Sugar","Trebuchet MS",sans-serif !important;
+}
+#actividadPostFuturoSesion3Pagina4 *{
+  box-sizing:border-box;
+}
+#actividadPostFuturoSesion3Pagina4 h1,
+#actividadPostFuturoSesion3Pagina4 h2,
+#actividadPostFuturoSesion3Pagina4 h3,
+#actividadPostFuturoSesion3Pagina4 p,
+#actividadPostFuturoSesion3Pagina4 label,
+#actividadPostFuturoSesion3Pagina4 span,
+#actividadPostFuturoSesion3Pagina4 strong{
+  font-family:"More Sugar","Trebuchet MS",sans-serif !important;
+  color:#16587B !important;
+}
+#actividadPostFuturoSesion3Pagina4 textarea,
+#actividadPostFuturoSesion3Pagina4 input[type="text"],
+#actividadPostFuturoSesion3Pagina4 input[type="email"]{
+  font-family:"Adam Script","Brush Script MT",cursive !important;
+  color:#16587B !important;
+  background:#F5EEDD !important;
+  border-color:#84B3CE !important;
+}
+#actividadPostFuturoSesion3Pagina4 .post-box,
+#actividadPostFuturoSesion3Pagina4 .post-card,
+#actividadPostFuturoSesion3Pagina4 .post-recuadro,
+#actividadPostFuturoSesion3Pagina4 .post-section,
+#actividadPostFuturoSesion3Pagina4 .post-field,
+#actividadPostFuturoSesion3Pagina4 .post-mensaje{
+  background:#F5EEDD !important;
+  border-color:#84B3CE !important;
+  color:#16587B !important;
+}
+#actividadPostFuturoSesion3Pagina4 button,
+#actividadPostFuturoSesion3Pagina4 .post-button{
+  background:#84B3CE !important;
+  border-color:#16587B !important;
+  color:#F5EEDD !important;
+}
+#actividadPostFuturoSesion3Pagina4 button:hover,
+#actividadPostFuturoSesion3Pagina4 .post-button:hover{
+  background:#16587B !important;
+  color:#F5EEDD !important;
+}
+#actividadPostFuturoSesion3Pagina4 .post-circle,
+#actividadPostFuturoSesion3Pagina4 .foto-circulo,
+#actividadPostFuturoSesion3Pagina4 .avatar-circle{
+  border-color:#84B3CE !important;
+  background:#F5EEDD !important;
+}
+
+
+/* ESTRELLAS — Sesión 3, página 4 */
+#actividadPostFuturoSesion3Pagina4 .estrella-post-futuro{
+  position:absolute !important;
+  display:block !important;
+  pointer-events:none !important;
+  z-index:99999 !important;
+  width:auto !important;
+  height:auto !important;
+  margin:0 !important;
+  padding:0 !important;
+  border:0 !important;
+  background:transparent !important;
+  color:#16587B !important;
+  font-family:"More Sugar","Trebuchet MS",sans-serif !important;
+  font-size:42px !important;
+  line-height:1 !important;
+  text-shadow:0 0 8px #F5EEDD, 0 0 12px #84B3CE !important;
+  animation:estrellaPostFuturo 1.1s ease-out forwards !important;
+}
+
+@keyframes estrellaPostFuturo{
+  0%{
+    opacity:0;
+    transform:translate(0,12px) scale(.15) rotate(0deg);
+  }
+  15%{
+    opacity:1;
+    transform:translate(0,0) scale(1.2) rotate(12deg);
+  }
+  45%{
+    opacity:1;
+    transform:translate(var(--dx1),var(--dy1)) scale(1.55) rotate(30deg);
+  }
+  100%{
+    opacity:0;
+    transform:translate(var(--dx2),var(--dy2)) scale(2) rotate(60deg);
+  }
+}
+
+
+#actividadPostFuturoSesion3Pagina4{
+  position:relative !important;
+  overflow:visible !important;
+}
+
+
+.actividad-hobbies-s6-p3{position:relative;margin:20px 0 10px;padding:22px;background:rgba(255,255,255,.9);border:2px dashed #a9c9d4;border-radius:22px;overflow:hidden;}
+.actividad-hobbies-s6-p3 h3{margin:0 0 12px;text-align:center;color:#5b95aa;}
+.actividad-hobbies-s6-p3 .hobbies-descripcion,.hobbies-instruccion{line-height:1.65;margin:0 0 14px;}
+.hobbies-editor{border:2px dashed #d8c49b;border-radius:18px;padding:15px;background:#fffaf0;}
+.hobbies-controles{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:12px;}
+.hobbies-controles label{font-size:14px;color:#527b89;font-weight:700;}
+.hobbies-controles input[type=color]{width:42px;height:34px;border:1px solid #b8cbd1;border-radius:8px;padding:2px;background:#fff;cursor:pointer;}
+.hobbies-controles select{border:1px solid #b8cbd1;border-radius:8px;padding:7px;background:#fff;color:#527b89;}
+#hobbiesTextoS6P3{width:100%;min-height:170px;resize:vertical;border:2px solid #c9dbe2;border-radius:13px;padding:14px;background:#fff;color:#0B2A4A;font-size:18px;line-height:1.55;outline:none;}
+.hobbies-estrella{position:absolute;pointer-events:none;font-size:42px;color:#8fc9df;animation:estrellaHobbies 2.4s ease-in-out infinite;opacity:.9;}
+.hobbies-estrella.s5{left:42%;top:12%;animation-delay:.25s}.hobbies-estrella.s6{right:34%;top:28%;animation-delay:.5s}.hobbies-estrella.s7{left:7%;top:58%;animation-delay:.9s}.hobbies-estrella.s8{right:7%;top:68%;animation-delay:1.4s}.hobbies-estrella.s9{left:38%;bottom:7%;animation-delay:1.8s}.hobbies-correo{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:14px;padding-top:12px;border-top:1px dashed #d8c49b}.hobbies-correo label{font-weight:700;color:#527b89}.hobbies-correo input{flex:1;min-width:190px;border:1px solid #b8cbd1;border-radius:8px;padding:9px;background:#fff}.hobbies-correo button{border:0;border-radius:10px;padding:10px 14px;background:#4f91ad;color:#fff;font-weight:700}.hobbies-correo-aviso{font-size:12px;color:#718993;margin:8px 0 0;}
+.hobbies-estrella.s1{left:10px;top:24%;}.hobbies-estrella.s2{right:10px;top:43%;animation-delay:.7s}.hobbies-estrella.s3{left:18px;bottom:18%;animation-delay:1.2s}.hobbies-estrella.s4{right:18px;bottom:10%;animation-delay:1.7s}
+@keyframes estrellaHobbies{0%,100%{transform:translateY(0) rotate(0deg) scale(.9);opacity:.45}50%{transform:translateY(-9px) rotate(18deg) scale(1.15);opacity:1}}
+</style>
+
+<style id="correccion-sesion4-pagina3-final">
+#sesion4Pagina3Bloque{display:none;width:100%;box-sizing:border-box;grid-column:1 / -1;}
+#sesion4Pagina3Bloque .sesion4-pagina3-tarjetas{display:grid;width:100%;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;align-items:stretch;}
+@media(max-width:760px){#sesion4Pagina3Bloque .sesion4-pagina3-tarjetas{grid-template-columns:1fr;}}
+</style>
+<style id="estilos-sesion4-pagina3-bloque">
+.sesion4-pagina3-bloque{width:100%;box-sizing:border-box;margin:0 0 18px;padding:0;}
+.sesion4-pagina3-bloque .sesion4-pagina3-historia{margin:0 0 18px;line-height:1.5;font-size:1rem;color:var(--texto);}
+.sesion4-pagina3-bloque .sesion4-pagina3-historia p{margin:0 0 12px;}
+.sesion4-pagina3-tarjetas{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;align-items:stretch;}
+.sesion4-pagina3-tarjetas .tarjeta-bien-comun{background:var(--color-tarjeta);color:#fff;border-radius:4px;padding:24px 20px 18px;box-sizing:border-box;min-height:430px;display:flex;flex-direction:column;box-shadow:0 3px 10px rgba(0,0,0,.08);}
+.sesion4-pagina3-tarjetas .tarjeta-bien-comun h4{margin:0 0 20px;font-size:1.25rem;text-align:center;color:#fff;}
+.sesion4-pagina3-tarjetas .tarjeta-bien-comun p{margin:0;font-size:1rem;line-height:1.45;text-align:center;color:#fff;}
+.sesion4-pagina3-tarjetas .tarjeta-bien-comun label{margin-top:24px;margin-bottom:8px;font-weight:900;text-align:center;color:#fff;}
+.sesion4-pagina3-tarjetas .tarjeta-bien-comun textarea{width:100%;min-height:150px;resize:vertical;border:0;border-radius:4px;padding:10px;box-sizing:border-box;font:inherit;color:#333;background:rgba(255,255,255,.92);outline:none;}
+.sesion4-pagina3-tarjetas .tarjeta-bien-comun textarea:focus{box-shadow:0 0 0 3px rgba(255,255,255,.55);}
+@media(max-width:760px){.sesion4-pagina3-tarjetas{grid-template-columns:1fr;}.sesion4-pagina3-tarjetas .tarjeta-bien-comun{min-height:360px;}}
+</style>
+<style id="estilos-sesion4-pagina2">
+.sesion4-pagina2-especial{display:none;background:#fffdf7;border:3px solid #d8c7a6;border-radius:16px;padding:18px;box-sizing:border-box;color:#c2dafa;width:min(100%,920px);margin:0 auto;}
+.sesion4-pagina2-especial .caso{font-weight:800;line-height:1.45;margin:0 0 18px;color:#c2dafa;}
+.sesion4-pagina2-especial .pregunta{margin:0 0 14px;padding:10px 0;border-bottom:1px solid #e4d9c4;}
+.sesion4-pagina2-especial .pregunta-texto{font-weight:800;line-height:1.35;margin-bottom:8px;color:#c2dafa;}
+.respuestas-si-no{display:flex;gap:8px;position:relative;}
+.respuestas-si-no button{border:2px solid #c2dafa;background:#fff;color:#4d82bc;border-radius:9px;padding:5px 14px;font-weight:800;cursor:pointer;}
+.respuestas-si-no button.seleccionado{background:#c2dafa;color:#fff;}
+.respuestas-si-no.bloqueada button{cursor:not-allowed;opacity:.55;}
+.respuestas-si-no.bloqueada{position:relative;}
+.respuestas-si-no.bloqueada::after{content:"";position:absolute;left:-2px;right:-2px;top:50%;height:3px;background:#4d82bc;transform:translateY(-50%);z-index:5;pointer-events:none;border-radius:2px;}
+.sesion4-cronometro{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 18px;padding:10px 12px;border:2px solid #d8c7a6;border-radius:12px;background:#fff;color:#4d82bc;font-weight:900;}
+.sesion4-cronometro .tiempo{font-size:1.2rem;color:#4d82bc;transition:all .2s ease;}
+.sesion4-cronometro.urgente{border-color:#2f5f92;background:#eef5ff;color:#2f5f92;}
+.sesion4-cronometro.urgente .tiempo{color:#2f5f92;font-size:1.35rem;font-weight:1000;}
+.sesion4-cronometro.agotado{border-color:#4d82bc;background:#e8f0fb;}
+.sesion4-cronometro button{border:2px solid #4d82bc;background:#fff;color:#4d82bc;border-radius:9px;padding:6px 10px;font-weight:800;cursor:pointer;}
+.contenido-imagen.filtro-bien-comun{display:block!important;}
+.contenido-imagen.filtro-bien-comun > .info-imagen{display:block!important;width:100%;}
+.contenido-imagen.filtro-bien-comun > .info-imagen > h3,
+.contenido-imagen.filtro-bien-comun > .info-imagen > #parrafoSesion2{display:none!important;}
+.contenido-imagen.filtro-bien-comun > div:first-child{display:none!important;}
+ .sesion4-pagina3-especial{display:none;width:100%;box-sizing:border-box;grid-column:1 / -1;gap:18px;grid-template-columns:repeat(3,minmax(0,1fr));align-items:stretch;}
+.sesion4-pagina3-especial .tarjeta-bien-comun{background:var(--color-tarjeta);color:#fff;border-radius:4px;padding:24px 20px 18px;box-sizing:border-box;min-height:430px;display:flex;flex-direction:column;box-shadow:0 3px 10px rgba(0,0,0,.08);}
+.sesion4-pagina3-especial .tarjeta-bien-comun h4{margin:0 0 20px;font-size:1.25rem;text-align:center;color:#fff;}
+.sesion4-pagina3-especial .tarjeta-bien-comun p{margin:0;font-size:1rem;line-height:1.45;text-align:center;color:#fff;}
+.sesion4-pagina3-especial .tarjeta-bien-comun label{margin-top:24px;margin-bottom:8px;font-weight:900;text-align:center;color:#fff;}
+.sesion4-pagina3-especial .tarjeta-bien-comun textarea{width:100%;min-height:150px;resize:vertical;border:0;border-radius:4px;padding:10px;box-sizing:border-box;font:inherit;color:#333;background:rgba(255,255,255,.88);outline:none;}
+.sesion4-pagina3-especial .tarjeta-bien-comun textarea:focus{box-shadow:0 0 0 3px rgba(255,255,255,.55);}
+.sesion4-pagina3-texto{margin:0 0 18px;line-height:1.5;font-size:1rem;}
+.sesion4-pagina3-texto p{margin:0 0 12px;}
+
+.contenido-imagen.sesion4-pagina3-activa{display:block!important;}
+.contenido-imagen.sesion4-pagina3-activa > div:first-child,.contenido-imagen.sesion4-pagina3-activa > .info-imagen{display:none!important;}
+.contenido-imagen.sesion4-pagina3-activa > .sesion4-pagina3-especial{display:grid!important;}
+@media(max-width:760px){.sesion4-pagina2-especial{padding:14px;}.sesion4-cronometro{align-items:flex-start;flex-direction:column;}.sesion4-pagina3-especial{grid-template-columns:1fr;}.sesion4-pagina3-especial .tarjeta-bien-comun{min-height:360px;}}
+</style>
+
+
+<style id="sesion5-pagina1-infografia-estilos">
+#sesion5Pagina1Infografia{width:100%;box-sizing:border-box;margin:22px 0 0;text-align:center;}
+#sesion5Pagina1Infografia img{display:block;max-width:100%;width:auto;height:auto;max-height:720px;margin:0 auto;border-radius:8px;object-fit:contain;}
+@media(max-width:760px){#sesion5Pagina1Infografia img{max-height:560px;width:100%;}}
+</style>
+
+
+<style id="sesion5-pagina4-ayuda-estilos">#sesion5Pagina4Ayuda{display:none;width:100%;box-sizing:border-box;margin:20px 0 0;text-align:center;color:#0B2A4A;font-family:Georgia,"Times New Roman",serif;font-size:1.05rem;line-height:1.65;}#sesion5Pagina4Ayuda p{margin:0 0 18px;}@media(max-width:760px){#sesion5Pagina4Ayuda{font-size:1rem;line-height:1.55;}}</style>
+<style id="estilos-sesion5-pagina2-puertas">
+#sesion5Pagina2Actividad{display:none;width:100%;box-sizing:border-box;margin-top:20px;}
+#sesion5Pagina2Actividad .puertas-titulo{margin:0 0 12px;text-align:left;font-size:1.35rem;color:#4d82bc;}
+#sesion5Pagina2Actividad .puertas-definiciones{display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:18px;}
+#sesion5Pagina2Actividad .puerta-linea{line-height:1.5;margin:0;}
+#sesion5Pagina2Actividad .abre{color:#9acb9a;font-weight:900;}
+#sesion5Pagina2Actividad .cierra{color:#e8a0a0;font-weight:900;}
+#sesion5Pagina2Actividad .puertas-carrusel{border:3px solid #e8b6c8;border-radius:14px;background:#fffafd;overflow:hidden;position:relative;touch-action:pan-y;box-sizing:border-box;}
+#sesion5Pagina2Actividad .puertas-track{display:flex;transition:transform .28s ease;will-change:transform;}
+#sesion5Pagina2Actividad .puerta-slide{min-width:100%;box-sizing:border-box;padding:24px 28px 20px;display:flex;flex-direction:column;justify-content:center;min-height:150px;}
+#sesion5Pagina2Actividad .puerta-slide p{margin:0;text-align:center;line-height:1.55;font-size:1.05rem;color:#3d4650;}
+#sesion5Pagina2Actividad .puertas-indicadores{display:flex;justify-content:center;gap:7px;margin:10px 0 2px;}
+#sesion5Pagina2Actividad .puertas-dot{width:9px;height:9px;border-radius:50%;border:0;background:#ead6df;padding:0;cursor:pointer;}
+#sesion5Pagina2Actividad .puertas-dot.activo{background:#c982a1;}
+#sesion5Pagina2Actividad .puertas-respuestas{display:flex;justify-content:center;gap:14px;margin-top:14px;}
+#sesion5Pagina2Actividad .puerta-respuesta{border:2px solid #e8b6c8;border-radius:9px;background:#fff;padding:8px 18px;font-weight:900;cursor:pointer;color:#6c6470;min-width:130px;position:relative;}
+#sesion5Pagina2Actividad .puerta-respuesta.abre-opcion{border-color:#a8d3aa;}
+#sesion5Pagina2Actividad .puerta-respuesta.cierra-opcion{border-color:#e5aaaa;}
+#sesion5Pagina2Actividad .puerta-respuesta.seleccionada::after{content:"✓";margin-left:8px;font-size:1.15rem;font-weight:1000;}
+#sesion5Pagina2Actividad .puertas-ayuda{text-align:center;margin:8px 0 0;color:#777;font-size:.88rem;}
+@media(max-width:760px){#sesion5Pagina2Actividad .puerta-slide{padding:20px 16px;min-height:175px;}#sesion5Pagina2Actividad .puertas-respuestas{gap:8px;}#sesion5Pagina2Actividad .puerta-respuesta{min-width:0;flex:1;padding:8px 10px;}}
+</style>
+
+
+<style id="hobbies-mail-style">
+.hobbies-mail-btn{
+  display:block;margin:14px auto 0;padding:10px 18px;border:0;border-radius:10px;
+  background:#4d82bc;color:#fff;font-weight:700;cursor:pointer;
+}
+.hobbies-mail-btn:hover{filter:brightness(.95)}
+</style>
+
+
+<style id="ocultar-todos-los-carruseles">
+/* Solo se ocultan los carruseles. El resto del contenido de cada página permanece intacto. */
+.carrusel-marco,
+.controles-carrusel,
+.indicador-imagen,
+.puertas-carrusel,
+.puertas-indicadores,
+.puertas-ayuda {
+  display: none !important;
+}
+</style>
+
+<style id="ocultar-carruseles-seguro">
+/* Oculta únicamente los carruseles, sin eliminar su HTML ni alterar la navegación. */
+.carrusel-marco,
+.controles-carrusel,
+.indicador-imagen,
+.flecha-carrusel,
+.carrusel-flecha,
+.carrusel-dots {
+  display: none !important;
+}
+/* Evita que el espacio reservado al carrusel deje un hueco innecesario. */
+.contenido-imagen {
+  grid-template-columns: 1fr !important;
+}
+</style>
+
+<style id="sesion5-pagina2-carrusel-override">
+/* Carrusel activado únicamente en la página cuyo título es ¿Abre o Cierra puertas? */
+</style>
+
+<style id="sesion5-pagina2-carrusel-override">
+/* Carrusel activado únicamente en Sesión 5, Página 2 */
+[data-session="5"][data-page="2"] .carousel,
+[data-session="5"][data-page="2"] .carousel-container,
+[data-session="5"][data-page="2"] .carousel-wrapper,
+[data-session="5"][data-page="2"] .carousel-track,
+[data-session="5"][data-page="2"] .carousel-slide,
+[data-session="5"][data-page="2"] .carousel-controls,
+[data-session="5"][data-page="2"] .carousel-indicators {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+[data-session="5"][data-page="2"] .carousel-slide {
+  flex: 0 0 100% !important;
+}
+</style>
+
+</head>
+
+<body>
+
+<header>
+<div class="logo">MI GUÍA</div>
+
+<div class="buscador">
+<input id="buscador" type="text" placeholder="Buscador">
+<div id="resultadosBusqueda" class="resultados-busqueda"></div>
+</div>
+
+<div></div>
+</header>
+
+<nav>
+<button id="btnPresentacion" onclick="mostrar('presentacion')">Presentación</button>
+<button id="btnEstructura" onclick="mostrar('estructura')">Estructura</button>
+<button id="btnRol" onclick="mostrar('rol')">Rol</button>
+<button id="btnManual" onclick="mostrar('manual')">Manual</button>
+
+<div class="menu-sesiones">
+<button id="botonSesiones" class="boton-sesiones" type="button">
+Sesiones <span class="flecha">▼</span>
+</button>
+
+<div id="submenuSesiones" class="submenu">
+<button data-sesion="1" type="button">Sesión 1</button>
+<button data-sesion="2" type="button">Sesión 2</button>
+<button data-sesion="3" type="button">Sesión 3</button>
+<button data-sesion="4" type="button">Sesión 4</button>
+<button data-sesion="5" type="button">Sesión 5</button>
+<button data-sesion="6" type="button">Sesión 6</button>
+</div>
+</div>
+
+<button id="btnRedes" onclick="mostrar('redes')">Redes sociales</button>
+</nav>
+
+<main>
+
+<section id="inicio" class="pantalla activa inicio">
+<div class="bienvenida">
+<h1>¡Bienvenido!</h1>
+<p>Explora el manual interactivo y descubre sus contenidos de una manera diferente.</p>
+<p>Utiliza el menú superior para conocer cada sección y las seis sesiones.</p>
+</div>
+</section>
+
+<section id="presentacion" class="pantalla">
+<div class="titulo-seccion">
+<h2>Presentación</h2>
+<p>Mi guía para construir el pensamiento crítico reflexivo</p>
+</div>
+
+<div class="contenedor-manual">
+<p>
+Este manual está diseñado para acompañar a la persona estudiante
+en el desarrollo de aprendizajes relacionados con el pensamiento
+crítico reflexivo y el uso responsable de las redes sociales.
+</p>
+
+<div class="caja-destacada">
+<strong>Propósito:</strong> reflexionar sobre la manera en que
+nos relacionamos, comunicamos y participamos en las redes sociales.
+</div>
+</div>
+</section>
+
+<section id="estructura" class="pantalla">
+<div class="titulo-seccion">
+<h2>Estructura del curso</h2>
+<p>Organización general del manual</p>
+</div>
+
+<div class="tarjetas">
+<div class="tarjeta">
+<h3>Sesiones</h3>
+<p>El manual está organizado en seis sesiones que abordan diferentes aspectos de las redes sociales.</p>
+</div>
+
+<div class="tarjeta">
+<h3>Actividades</h3>
+<p>Las actividades permiten reflexionar, participar y aplicar lo aprendido.</p>
+</div>
+
+<div class="tarjeta">
+<h3>Aprendizaje</h3>
+<p>Se busca fortalecer el pensamiento crítico y reflexivo mediante diferentes experiencias.</p>
+</div>
+</div>
+</section>
+
+<section id="rol" class="pantalla">
+<div class="titulo-seccion">
+<h2>Rol de la persona estudiante</h2>
+<p>Actitudes y participación durante el curso</p>
+</div>
+
+<div class="contenedor-manual">
+<p>
+La persona estudiante participa activamente en las actividades,
+reflexiona sobre los contenidos y desarrolla actitudes y valores
+que favorecen una convivencia respetuosa.
+</p>
+
+<div class="lista-iconos">
+<div class="icono-item"><strong>Respeto</strong><br>Reconocer y valorar a las demás personas.</div>
+<div class="icono-item"><strong>Responsabilidad</strong><br>Reflexionar antes de actuar o publicar.</div>
+<div class="icono-item"><strong>Participación</strong><br>Compartir ideas y aprender con otras personas.</div>
+</div>
+</div>
+</section>
+
+<section id="manual" class="pantalla">
+<div class="titulo-seccion">
+<h2>Descripción del manual</h2>
+<p>Elementos y formas de trabajo</p>
+</div>
+
+<div class="contenedor-manual">
+<p>
+El manual utiliza diferentes tipos de actividades y recursos para
+facilitar el aprendizaje. Cada icono identifica una forma de trabajo
+o una indicación dentro de las sesiones.
+</p>
+
+<div class="lista-iconos">
+<div class="icono-item"><strong>Instrucción</strong><br>Indica qué se debe realizar.</div>
+<div class="icono-item"><strong>Actividad individual</strong><br>Trabajo que realiza cada estudiante.</div>
+<div class="icono-item"><strong>Plenaria</strong><br>Espacio para compartir y comentar.</div>
+<div class="icono-item"><strong>Evaluación</strong><br>Permite revisar lo aprendido.</div>
+<div class="icono-item"><strong>Comunidad de aprendizaje</strong><br>Trabajo y aprendizaje con otras personas.</div>
+<div class="icono-item"><strong>Para aprender más</strong><br>Información complementaria.</div>
+</div>
+</div>
+</section>
+
+<section id="redes" class="pantalla">
+<div class="titulo-seccion">
+<h2>Redes sociales</h2>
+<p>Reflexiona sobre su uso responsable</p>
+</div>
+
+<div class="tarjetas">
+<div class="tarjeta">
+<h3>Respeto</h3>
+<p>Las interacciones en redes sociales deben considerar la dignidad y los derechos de las demás personas.</p>
+</div>
+
+<div class="tarjeta">
+<h3>Responsabilidad</h3>
+<p>Antes de publicar o responder es importante pensar en las consecuencias de nuestras acciones.</p>
+</div>
+
+<div class="tarjeta">
+<h3>Huella digital</h3>
+<p>Lo que compartimos en internet puede formar parte de nuestra huella digital.</p>
+</div>
+</div>
+</section>
+
+<section id="sesiones" class="pantalla">
+<div class="titulo-seccion">
+<h2>Sesiones</h2>
+<p>Selecciona una sesión para comenzar</p>
+</div>
+
+<div class="sesiones-panel">
+<div class="lista-sesiones">
+<button data-lista-sesion="1">Sesión 1</button>
+<button data-lista-sesion="2">Sesión 2</button>
+<button data-lista-sesion="3">Sesión 3</button>
+<button data-lista-sesion="4">Sesión 4</button>
+<button data-lista-sesion="5">Sesión 5</button>
+<button data-lista-sesion="6">Sesión 6</button>
+</div>
+
+<div id="contenidoSesion" class="sesion-contenido">
+<h2 id="tituloSesion">Sesión 1</h2>
+<div id="numeroSesion" class="numero">La dignidad humana en las redes sociales</div>
+
+<div class="pagina activa">
+<h3 id="tituloPagina">Introducción</h3>
+<p id="parrafoSesion">
+En esta sesión se reflexiona sobre la dignidad humana y la manera
+en que se relaciona con el uso de las redes sociales.
+</p>
+
+<div id="sesion5Pagina3Intro" class="sesion5-pagina3-intro" style="display:none;">
+  <p class="sesion5-netiqueta-pregunta"><strong>¿Que es una Netiqueta?</strong></p>
+  <a href="https://youtu.be/SrDvQCcNwWQ?si=pylSF5w1aQcEV5XH" target="_blank" rel="noopener noreferrer">Ver video en YouTube</a>
+</div>
+<div class="caja-destacada">
+<strong>Reflexiona:</strong> <strong id="textoReflexion">Promover el respeto en redes sociales ayuda a crear espacios más seguros y agradables para todas las personas.</strong>
+</div>
+
+<div class="actividad-hobbies-s6-p3" id="actividadHobbiesS6P3" aria-hidden="true" style="display:none !important;">
+<span class="hobbies-estrella s1">✦</span><span class="hobbies-estrella s2">★</span><span class="hobbies-estrella s3">✧</span><span class="hobbies-estrella s4">⋆</span><span class="hobbies-estrella s5">✦</span><span class="hobbies-estrella s6">★</span><span class="hobbies-estrella s7">✧</span><span class="hobbies-estrella s8">⋆</span><span class="hobbies-estrella s9">✦</span>
+<h3>ACTIVIDAD HOBBIES</h3>
+<p class="hobbies-descripcion">Reconocer y valorar aquellas actividades que disfrutamos realizar en nuestro tiempo libre, identificando cómo nuestros hobbies pueden ayudarnos a expresarnos más allá en redes sociales.</p>
+<p class="hobbies-instruccion">En el siguiente recuadro escribirás sobre como puedes llevar acabo una cuenta en redes sociales sobre tus pasatiempo. Esto puede ayudar a que más personas se sumen y empiezen a seguir lo que más le apasiona</p>
+<div class="hobbies-editor"><div class="hobbies-controles"><label for="hobbiesColorS6P3">Color del texto</label><input id="hobbiesColorS6P3" type="color" value="#0B2A4A" aria-label="Color del texto"><label for="hobbiesFuenteS6P3">Tipo de letra</label><select id="hobbiesFuenteS6P3" aria-label="Tipo de letra"><option value="Arial, sans-serif">Arial</option><option value="Georgia, serif">Georgia</option><option value="Verdana, sans-serif">Verdana</option><option value="Trebuchet MS, sans-serif">Trebuchet MS</option><option value="Courier New, monospace">Courier New</option></select></div><textarea id="hobbiesTextoS6P3" placeholder="Escribe aquí sobre tu pasatiempo y cómo crearías una cuenta para compartirlo..."></textarea></div><div class="hobbies-correo"><label for="hobbiesCorreoS6P3">Correo electrónico:</label><input id="hobbiesCorreoS6P3" type="email" placeholder="tucorreo@ejemplo.com"><button type="button" onclick="enviarHobbiesPorCorreo()">✉ Enviar por correo</button></div><p class="hobbies-correo-aviso">El botón abrirá tu aplicación de correo con el texto que escribiste para que puedas enviarlo.</p>
+</div>
+
+<div id="sesion5Pagina4Ayuda" class="sesion5-pagina4-ayuda" aria-hidden="true">
+<p>Si eres víctima o testigo de ciberacoso (cyberbullying), busca ayuda de inmediato con un adulto de confianza (como tu mamá, papá, personas cuidadoras, maestras, maestros).</p>
+<p>Además, reporta la situación directamente en la red social o plataforma donde está ocurriendo, denuncia ante la Policía Cibernética o a la Guardia Nacional llamando al 088 y escribiendo al correo ceac@sspc.gob.mx. Acude a la Fiscalía de tu localidad si es necesario.</p>
+<p>Si te encuentras en una situación de vulnerabilidad o te sientes en peligro, confía en tu familia o en tus maestras o maestros: siempre habrá alguien dispuesto a escucharte, apoyarte y protegerte</p>
+</div>
+
+<div id="sesion5Pagina2Actividad" aria-hidden="true">
+  <h3 class="puertas-titulo">Publicaciones para analizar</h3>
+  <div class="puertas-definiciones">
+    <p class="puerta-linea"><span class="abre">Abre puertas</span> — La publicación demuestra responsabilidad, respeto, creatividad, empatía o alguna habilidad positiva.</p>
+    <p class="puerta-linea"><span class="cierra">Cierra puertas</span> — La publicación puede afectar la reputación, generar conflictos, mostrar falta de respeto o tener consecuencias en el futuro.</p>
+  </div>
+  <div class="puertas-carrusel" id="puertasCarrusel">
+    <div class="puertas-track" id="puertasTrack">
+      <div class="puerta-slide"><p>“Hoy participé como voluntario en una campaña para ayudar a limpiar el parque de mi comunidad. 🌱”</p></div>
+      <div class="puerta-slide"><p>“Qué ridícula se ve esta persona 😂. Mejor ni debería salir así.”</p></div>
+      <div class="puerta-slide"><p>“Terminé un proyecto escolar en equipo. Me gustó aprender a organizarme y escuchar las ideas de mis compañeros.”</p></div>
+      <div class="puerta-slide"><p>“Miren lo que me mandaron de mi compañero. No sé si sea cierto, pero lo voy a publicar para que todos lo vean.”</p></div>
+    </div>
+  </div>
+  <div class="puertas-indicadores" id="puertasIndicadores" aria-label="Publicaciones">
+    <button class="puertas-dot activo" type="button" aria-label="Publicación 1"></button>
+    <button class="puertas-dot" type="button" aria-label="Publicación 2"></button>
+    <button class="puertas-dot" type="button" aria-label="Publicación 3"></button>
+    <button class="puertas-dot" type="button" aria-label="Publicación 4"></button>
+  </div>
+  <div class="puertas-respuestas">
+    <button type="button" class="puerta-respuesta cierra-opcion" data-puerta="Cierra puertas">Cierra puertas</button>
+    <button type="button" class="puerta-respuesta abre-opcion" data-puerta="Abre puertas">Abre puertas</button>
+  </div>
+  <p class="puertas-ayuda">Desliza hacia los lados para cambiar de publicación.</p>
+</div>
+
+
+<div id="sesion5Pagina3Youtube" class="sesion5-pagina3-youtube" style="display:none;"></div>
+
+<div id="sesion5Pagina1Infografia" class="sesion5-pagina1-infografia" style="display:none;">
+  <img src="https://share.google/a4OZmcnsXjhnn969O" alt="Infografía sobre normas de convivencia en las redes sociales">
+</div>
+</div>
+
+<div class="contenido-imagen" id="contenidoImagenPrincipal">
+<div>
+<div class="carrusel-marco">
+<button class="flecha-carrusel izquierda" type="button" onclick="cambiarImagen(-1)">‹</button>
+<img id="imagenSesion" src="" alt="Imagen de la sesión" onclick="abrirImagen()">
+<button class="flecha-carrusel derecha" type="button" onclick="cambiarImagen(1)">›</button>
+</div>
+
+<div id="controlesCarrusel" class="controles-carrusel"></div>
+<div id="indicadorImagen" class="indicador-imagen">Imagen 1 de 3 · Haz clic para ampliar</div>
+</div>
+
+<div class="info-imagen">
+<h3 id="subtituloImagen">Espacio para aprender</h3>
+<p id="parrafoSesion2">
+Contenido introductorio de la sesión sobre dignidad humana y respeto en las redes sociales.
+</p>
+
+<div id="sesion4Pagina3Texto" class="sesion4-pagina3-texto" style="display:none;">
+<p>Roxana y Kevin publicaron un video de Mateo burlándose de su ropa tradicional para ganar seguidores y seguidoras. El video tuvo cierto éxito, pero Mateo dejó de participar y se aisló del grupo.</p>
+<p>Imaginen que cada equipo se convierte ahora en un “comité de ética digital”. Reflexionen un momento sobre la historia de Roxana y Kevin y, con base a las ideas principales que identificaron, respondan estos puntos:</p>
+</div>
+
+<div id="sesion4Pagina2Especial" class="sesion4-pagina2-especial">
+  <div class="sesion4-cronometro" id="sesion4Cronometro">
+    <span>Tiempo para responder</span>
+    <span class="tiempo" id="sesion4Tiempo">30 s</span>
+    <button type="button" id="sesion4Reiniciar">Reiniciar</button>
+  </div>
+  <p class="caso">Alguien acaba de enviarte un mensaje por WhatsApp con un chisme 'gracioso' pero cuestionable sobre una compañera del salón. Tienen 20 segundos para decidir: ¿lo comparten, lo borran o lo aclaran?</p>
+  <div class="pregunta"><div class="pregunta-texto">¿Es información real?</div><div class="respuestas-si-no"><button type="button" data-pregunta="0" data-respuesta="Sí">Sí</button><button type="button" data-pregunta="0" data-respuesta="No">No</button></div></div>
+  <div class="pregunta"><div class="pregunta-texto">¿Es confiable o es un rumor o noticia falsa?</div><div class="respuestas-si-no"><button type="button" data-pregunta="1" data-respuesta="Sí">Sí</button><button type="button" data-pregunta="1" data-respuesta="No">No</button></div></div>
+  <div class="pregunta"><div class="pregunta-texto">¿Respeta la diversidad?</div><div class="respuestas-si-no"><button type="button" data-pregunta="2" data-respuesta="Sí">Sí</button><button type="button" data-pregunta="2" data-respuesta="No">No</button></div></div>
+  <div class="pregunta"><div class="pregunta-texto">¿Valora a la persona o la ataca por ser diferente?</div><div class="respuestas-si-no"><button type="button" data-pregunta="3" data-respuesta="Sí">Sí</button><button type="button" data-pregunta="3" data-respuesta="No">No</button></div></div>
+  <div class="pregunta"><div class="pregunta-texto">¿Hay cero daños?</div><div class="respuestas-si-no"><button type="button" data-pregunta="4" data-respuesta="Sí">Sí</button><button type="button" data-pregunta="4" data-respuesta="No">No</button></div></div>
+  <div class="pregunta"><div class="pregunta-texto">¿Podría lastimar los sentimientos o la reputación de alguien?</div><div class="respuestas-si-no"><button type="button" data-pregunta="5" data-respuesta="Sí">Sí</button><button type="button" data-pregunta="5" data-respuesta="No">No</button></div></div>
+  <div class="pregunta"><div class="pregunta-texto">¿Muestra valores en acción?</div><div class="respuestas-si-no"><button type="button" data-pregunta="6" data-respuesta="Sí">Sí</button><button type="button" data-pregunta="6" data-respuesta="No">No</button></div></div>
+  <div class="pregunta"><div class="pregunta-texto">¿Hay empatía o solidaridad en este acto?</div><div class="respuestas-si-no"><button type="button" data-pregunta="7" data-respuesta="Sí">Sí</button><button type="button" data-pregunta="7" data-respuesta="No">No</button></div></div>
+</div>
+
+<div id="sesion4Pagina3Especial" class="sesion4-pagina3-especial" aria-hidden="true">
+  <div class="tarjeta-bien-comun" style="--color-tarjeta:#588BAE;">
+    <h4>El daño invisible:</h4>
+    <p>¿Cómo afectó la "libertad" de Roxana y Kevin al bienestar de Mateo en el salón?</p>
+    <label>Respuesta</label>
+    <textarea aria-label="Respuesta El daño invisible" placeholder="Escribe aquí..."></textarea>
+  </div>
+  <div class="tarjeta-bien-comun" style="--color-tarjeta:#4d82bc;">
+    <h4>La falsa risa:</h4>
+    <p>¿Por qué un comentario que parece "gracioso" puede afectar negativamente al bien común de la clase?</p>
+    <label>Respuesta</label>
+    <textarea aria-label="Respuesta La falsa risa" placeholder="Escribe aquí..."></textarea>
+  </div>
+  <div class="tarjeta-bien-comun" style="--color-tarjeta:#83ABD0;">
+    <h4>La responsabilidad:</h4>
+    <p>Identifiquen el momento exacto en que Kevin decidió cambiar su actitud.</p>
+    <label>Respuesta</label>
+    <textarea aria-label="Respuesta La responsabilidad" placeholder="Escribe aquí..."></textarea>
+  </div>
+</div>
+
+<div id="sesion4Pagina3Bloque" class="sesion4-pagina3-bloque" style="display:none;" aria-hidden="true">
+  <div class="sesion4-pagina3-historia">
+    <p>Roxana y Kevin publicaron un video de Mateo burlándose de su ropa tradicional para ganar seguidores y seguidoras. El video tuvo cierto éxito, pero Mateo dejó de participar y se aisló del grupo.</p>
+    <p>Imaginen que cada equipo se convierte ahora en un “comité de ética digital”. Reflexionen un momento sobre la historia de Roxana y Kevin y, con base a las ideas principales que identificaron, respondan estos puntos:</p>
+  </div>
+  <div class="sesion4-pagina3-tarjetas">
+    <div class="tarjeta-bien-comun" style="--color-tarjeta:#588BAE;">
+      <h4>El daño invisible:</h4>
+      <p>¿Cómo afectó la "libertad" de Roxana y Kevin al bienestar de Mateo en el salón?</p>
+      <label>Respuesta</label>
+      <textarea aria-label="Respuesta El daño invisible" placeholder="Escribe aquí..."></textarea>
+    </div>
+    <div class="tarjeta-bien-comun" style="--color-tarjeta:#4d82bc;">
+      <h4>La falsa risa:</h4>
+      <p>¿Por qué un comentario que parece "gracioso" puede afectar negativamente al bien común de la clase?</p>
+      <label>Respuesta</label>
+      <textarea aria-label="Respuesta La falsa risa" placeholder="Escribe aquí..."></textarea>
+    </div>
+    <div class="tarjeta-bien-comun" style="--color-tarjeta:#83ABD0;">
+      <h4>La responsabilidad:</h4>
+      <p>Identifiquen el momento exacto en que Kevin decidió cambiar su actitud.</p>
+      <label>Respuesta</label>
+      <textarea aria-label="Respuesta La responsabilidad" placeholder="Escribe aquí..."></textarea>
+    </div>
+  </div>
+</div>
+
+<div id="areaActividadSesion1" class="area-actividad-sesion1" style="display:none;">
+<label id="etiquetaAreaActividad" for="entradaActividad">Escribe tu respuesta:</label>
+<textarea id="entradaActividad" aria-label="Respuesta de la actividad" placeholder="Escribe aquí..."></textarea>
+</div>
+
+<div id="instruccionesActividad3Sesion1" class="instrucciones-actividad3-sesion1" style="display:none;">
+  <p><strong>• Elige una situación con emoji de desagrado 😒 y reflexiona:</strong> ¿Cómo afecta la dignidad de las personas?</p>
+  <p><strong>• Luego, transfórmala en una situación positiva ♡</strong> donde se respete la dignidad.</p>
+  <p><strong>☑ Puedes usar diálogos, emojis o elementos digitales.</strong> Represéntala en la siguiente plantilla.</p>
+</div>
+
+<div id="plantillaActividad3Sesion1" class="plantilla-actividad3-sesion1" style="display:none;">
+  <div class="plantilla-actividad3-marco">
+    <img src="imagenes_manual/imagen_1.jpg" alt="Plantilla de la Actividad 3 con espacios para diálogos">
+    <textarea class="dialogo dialogo-1" aria-label="Diálogo 1" placeholder="Escribe aquí..."></textarea>
+    <textarea class="dialogo dialogo-2" aria-label="Diálogo 2" placeholder="Escribe aquí..."></textarea>
+    <textarea class="dialogo dialogo-3" aria-label="Diálogo 3" placeholder="Escribe aquí..."></textarea>
+    <textarea class="dialogo dialogo-4" aria-label="Diálogo 4" placeholder="Escribe aquí..."></textarea>
+    <textarea class="dialogo dialogo-5" aria-label="Diálogo 5" placeholder="Escribe aquí..."></textarea>
+  </div>
+</div>
+</div>
+</div>
+
+
+<div id="perfilComparacionSesion3" class="perfil-comparacion-sesion3" style="display:none;">
+<div class="perfil-comparacion-instrucciones">
+<p><strong class="instruccion-izquierda">Columna izquierda ("Así me muestro en redes sociales"):</strong> Escribe lo que publicas, los gustos que compartes y esa imagen que te gusta que las otras personas vean de ti.</p>
+<p><strong class="instruccion-derecha">Columna derecha ("Así soy en realidad"):</strong> Escribe tus formas de ser más profundas, los gustos que ocultas por temor a la crítica o cómo te sientes realmente cuando enfrentas comentarios negativos.</p>
+</div>
+<div class="perfil-comparacion-cuadros">
+<div class="perfil-cuadro izquierda">
+<h4>Así me muestro en redes sociales</h4>
+<textarea aria-label="Así me muestro en redes sociales" placeholder="Escribe aquí..."></textarea>
+</div>
+<div class="perfil-cuadro derecha">
+<h4>Así soy en realidad</h4>
+<textarea aria-label="Así soy en realidad" placeholder="Escribe aquí..."></textarea>
+</div>
+</div>
+</div>
+
+<div id="actividadCollageSesion3Pagina3" class="actividad-collage-sesion3-pagina3" style="display:none;">
+
+<div class="collage-grid">
+<div class="collage-bloque collage-valores">
+<h3>Mis valores</h3>
+<p>¿Qué es importante para mí y guía mis decisiones? ¿Cómo trato a las demás personas?</p>
+<textarea aria-label="Mis valores" placeholder="Escribe aquí..."></textarea>
+</div>
+
+<div class="collage-bloque collage-intereses">
+<h3>Mis intereses</h3>
+<p>Lo que me gusta, lo que disfruto, lo que llama mi atención.</p>
+<textarea aria-label="Mis intereses" placeholder="Escribe aquí..."></textarea>
+</div>
+
+<div class="collage-bloque collage-capacidades">
+<h3>Mis capacidades</h3>
+<p>Lo que sé hacer bien (habilidades y talentos).</p>
+<textarea aria-label="Mis capacidades" placeholder="Escribe aquí..."></textarea>
+</div>
+
+<div class="collage-bloque collage-historia">
+<h3>Mi historia</h3>
+<p>Momentos importantes y significativos en mi vida.</p>
+<textarea aria-label="Mi historia" placeholder="Escribe aquí..."></textarea>
+</div>
+</div>
+
+<div class="collage-bloque collage-meta">
+<h3>Mi meta</h3>
+<p>Lo que quiero lograr ahora o en el futuro.</p>
+<textarea aria-label="Mi meta" placeholder="Escribe aquí..."></textarea>
+</div>
+
+<div class="collage-bloque collage-reflexion">
+<h3>Reflexión final</h3>
+<p>¿Mi perfil en redes muestra quién soy en realidad? ¿Por qué?</p>
+<textarea aria-label="Reflexión final" placeholder="Escribe aquí..."></textarea>
+</div>
+</div>
+
+<div id="actividadPostFuturoSesion3Pagina4" class="actividad-post-futuro-sesion3-pagina4" style="display:none;">
+<div class="post-futuro-perfil">
+<div class="post-futuro-foto">
+<canvas id="canvasFotoFuturo" width="220" height="220" aria-label="Espacio circular para subir o dibujar una imagen"></canvas>
+<input id="fotoFuturoInput" type="file" accept="image/*" hidden>
+<div class="foto-futuro-botones">
+<button type="button" class="post-futuro-boton" onclick="document.getElementById('fotoFuturoInput').click()">Subir imagen</button>
+<button type="button" class="post-futuro-boton" onclick="limpiarCanvasFuturo()">Borrar / dibujar</button>
+</div>
+</div>
+<div class="post-futuro-identidad">
+<div class="post-futuro-linea"><label for="nombreFuturo">Para: mi yo del futuro</label><input id="nombreFuturo" type="text" placeholder="Escribe aquí..."></div>
+<div class="post-futuro-linea"><label for="fechaFuturo">Fecha:</label><input id="fechaFuturo" type="text" placeholder="__/__/____"></div>
+<div class="post-futuro-frase">Un mensaje para mí yo del futuro</div>
+<p>Este es un recordatorio de quién quiero ser, lo que quiero conservar y lo que quiero construir. No olvides tu esencia. ✨</p>
+</div>
+</div>
+
+<div class="post-futuro-cuadros">
+<div class="post-futuro-cuadro azul1">
+<h4>¿QUIÉN QUIERO SER?</h4>
+<p>Describe cómo te gustaría ser como persona en 3 años.</p>
+<textarea aria-label="Quién quiero ser" placeholder="Escribe aquí..."></textarea>
+</div>
+<div class="post-futuro-cuadro azul2">
+<h4>¿QUÉ VALORES QUIERO CONSERVAR?</h4>
+<p>Escribe los valores que no quieres perder nunca.</p>
+<textarea aria-label="Qué valores quiero conservar" placeholder="Escribe aquí..."></textarea>
+</div>
+<div class="post-futuro-cuadro azul3">
+<h4>¿QUÉ HABILIDADES QUIERO DESARROLLAR?</h4>
+<p>¿Qué cosas nuevas quieres aprender o mejorar para lograr tus sueños?</p>
+<textarea aria-label="Qué habilidades quiero desarrollar" placeholder="Escribe aquí..."></textarea>
+</div>
+<div class="post-futuro-cuadro azul4">
+<h4>¿CÓMO QUIERO USAR REDES SOCIALES SIN PERDER MI ESENCIA?</h4>
+<p>¿Qué tipo de contenido quieres ver, compartir y crear? ¿Cómo quieres cuidar tu bienestar digital?</p>
+<textarea aria-label="Cómo quiero usar redes sociales sin perder mi esencia" placeholder="Escribe aquí..."></textarea>
+</div>
+</div>
+
+<div class="post-futuro-mensaje">
+<h4>MI MENSAJE PARA MI YO DEL FUTURO:</h4>
+<textarea aria-label="Mi mensaje para mi yo del futuro" placeholder="Escribe aquí..."></textarea>
+</div>
+
+<div class="post-futuro-envio">
+<label for="correoPostFuturo">Correo electrónico:</label>
+<input id="correoPostFuturo" type="email" placeholder="tucorreo@ejemplo.com">
+<button type="button" onclick="enviarPostFuturoPorCorreo()">✉ Enviar a mi correo</button>
+</div>
+<p class="post-futuro-aviso">Al tocar el botón se abrirá tu aplicación de correo con el post escrito para que puedas enviarlo.</p>
+</div>
+
+
+
+<div id="tablaPagina4" class="tabla-pagina4" style="display:none;">
+<p class="instruccion-tabla-pagina4">Con base al texto inicial, pon en la columna de la derecha un emoji 😒 (desagrado) con un 🚫 si la acción no respeta la dignidad de las personas o un corazón 💚 si la acción cuida y promueve la dignidad humana.</p>
+<table>
+<thead>
+<tr>
+<th>Acción</th>
+<th>¿Cómo cuida la dignidad humana?</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Burlarse de alguien en comentarios de una publicación de TikTok.</td><td><select class="selector-emoji" aria-label="Selecciona un emoji"><option value="">Elige</option><option>😒</option><option>🚫</option><option>💚</option></select></td></tr>
+<tr><td>Compartir noticias sin verificar.</td><td><select class="selector-emoji" aria-label="Selecciona un emoji"><option value="">Elige</option><option>😒</option><option>🚫</option><option>💚</option></select></td></tr>
+<tr><td>Respetar opiniones que no coincidan con las propias.</td><td><select class="selector-emoji" aria-label="Selecciona un emoji"><option value="">Elige</option><option>😒</option><option>🚫</option><option>💚</option></select></td></tr>
+<tr><td>Defender a una persona que está siendo atacada en redes sociales.</td><td><select class="selector-emoji" aria-label="Selecciona un emoji"><option value="">Elige</option><option>😒</option><option>🚫</option><option>💚</option></select></td></tr>
+<tr><td>Insultar de forma “anónima” en un grupo de redes sociales.</td><td><select class="selector-emoji" aria-label="Selecciona un emoji"><option value="">Elige</option><option>😒</option><option>🚫</option><option>💚</option></select></td></tr>
+<tr><td>Publicar sin permiso fotos de otras personas en redes sociales.</td><td><select class="selector-emoji" aria-label="Selecciona un emoji"><option value="">Elige</option><option>😒</option><option>🚫</option><option>💚</option></select></td></tr>
+<tr><td>Excluir a alguien de un grupo digital.</td><td><select class="selector-emoji" aria-label="Selecciona un emoji"><option value="">Elige</option><option>😒</option><option>🚫</option><option>💚</option></select></td></tr>
+<tr><td>Denunciar contenido ofensivo.</td><td><select class="selector-emoji" aria-label="Selecciona un emoji"><option value="">Elige</option><option>😒</option><option>🚫</option><option>💚</option></select></td></tr>
+<tr><td>Crear contenido positivo para ayudar a otras personas.</td><td><select class="selector-emoji" aria-label="Selecciona un emoji"><option value="">Elige</option><option>😒</option><option>🚫</option><option>💚</option></select></td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="navegacion-pagina">
+<button id="anteriorPagina" type="button" onclick="cambiarPagina(-1)">← Anterior</button>
+<span id="indicadorPagina" class="indicador-pagina">Página 1 / 4</span>
+<button id="siguientePagina" type="button" onclick="cambiarPagina(1)">Siguiente →</button>
+</div>
+</div>
+</div>
+</section>
+
+</main>
+
+<footer>
+<button class="boton" onclick="inicio()">Volver al inicio</button>
+<span class="footer-centro">Mi guía · Manual interactivo</span>
+<span id="ubicacion">Sesión 1 · Página 1</span>
+</footer>
+
+<div id="modalImagen" class="modal-imagen" onclick="cerrarImagen(event)">
+<button class="modal-flecha izquierda" type="button" onclick="event.stopPropagation();cambiarImagen(-1)">‹</button>
+
+<div class="modal-contenido" onclick="event.stopPropagation()">
+<button class="modal-cerrar" type="button" onclick="cerrarImagen()">×</button>
+<img id="imagenModal" src="" alt="Imagen ampliada">
+<div id="textoModal" class="modal-texto">Imagen ampliada</div>
+</div>
+
+<button class="modal-flecha derecha" type="button" onclick="event.stopPropagation();cambiarImagen(1)">›</button>
+</div>
+
+<script>
+const sesiones={
+1:{
+titulo:"La dignidad humana en las redes sociales",
+paginas:4
+},
+2:{
+titulo:"Pensar antes de responder: libertad, respeto y redes sociales",
+paginas:5
+},
+3:{
+titulo:"Redes sociales y construcción de identidad",
+paginas:4
+},
+4:{
+titulo:"Redes sociales para el bien común",
+paginas:3
+},
+5:{
+titulo:"Normas de convivencia en las redes sociales",
+paginas:4
+},
+6:{
+titulo:"Colectividad positiva en las redes sociales",
+paginas:3
+}
+};
+
+let sesionActual=1;
+let paginaActual=1;
+let imagenActual=0;
+
+const informacionFijaSesion1={
+1:{titulo:"Respeto en redes sociales",texto:"El respeto en redes sociales es fundamental para proteger la dignidad humana. Esto significa tratar a las demás personas como nos gustaría que se nos tratara y observar la búsqueda de los principios del bien común, la justicia, la libertad y la integridad."},
+2:{titulo:"Responsabilidad digital",texto:"Usar las redes sociales implica asumir responsabilidad sobre aquello que publicamos, compartimos y comentamos."},
+3:{titulo:"Reflexión",texto:"El estudio reconoce que muchas interacciones pueden ser buenas y que es posible mejorar la convivencia en el mundo digital, e invita, a través de la educación digital, a hacernos conscientes de la forma en que nuestras acciones en línea afectan a las personas con quienes nos conectamos, y a poner en práctica valores como el respeto, la empatía y la responsabilidad cuando usamos redes sociales."}
+};
+
+const informacionActividadPorSesion={
+1:[
+{titulo:"ACTIVIDAD 1",texto:"Piensa en el cambio que hiciste en la actividad “Elige y transforma”: ¿qué valores usaste para mostrar respeto, empatía y dignidad? Escríbelos en el recuadro de abajo."},
+{titulo:"ACTIVIDAD 2",texto:"Entre todas y todos, acuerden 5 reglas para usar redes sociales con respeto y empatía, y escríbanlas en el recuadro de abajo."},
+{titulo:"Actividad 3",texto:""}
+],
+2:[
+{titulo:"Actividad · Imagen 1",texto:"Observa la situación y analiza cómo puedes comunicarte con respeto antes de responder."},
+{titulo:"Actividad · Imagen 2",texto:"Relaciona la imagen con la libertad de expresión y el respeto hacia las demás personas."},
+{titulo:"Actividad · Imagen 3",texto:"Reflexiona sobre las consecuencias de nuestras respuestas y comparte tus conclusiones."}
+],
+5:[
+{titulo:"El filtro de comentarios",texto:"Imagina que eres la persona que actúa como moderador de la comunidad de tu creador o creadora de contenido favorito. Tu misión es limpiar la sección de comentarios hate o trolls, para que el ambiente sea sano.\n\nIdentifica que tipo de comentarios es:\n\n• El comentario hate (odio).\n• El comentario troll o spammer*.\n• El comentario que representa una crítica constructiva."}
+],
+3:[
+{titulo:"Actividad · Imagen 1",texto:"Observa la imagen y reflexiona sobre la forma en que construyes y presentas tu identidad en redes sociales."},
+{titulo:"Actividad · Imagen 2",texto:"Analiza qué aspectos de tu identidad eliges compartir y cómo pueden ser percibidos por otras personas."},
+{titulo:"Actividad · Imagen 3",texto:"Relaciona lo observado con tu propia experiencia y expresa tus conclusiones."}
+],
+4:[
+{titulo:"Actividad · Imagen 1",texto:"Observa la imagen y piensa cómo las redes sociales pueden favorecer la participación en la comunidad."},
+{titulo:"Actividad · Imagen 2",texto:"Analiza de qué manera la colaboración puede contribuir al bien común."},
+{titulo:"Actividad · Imagen 3",texto:"Reflexiona sobre una acción que puedas realizar para aportar positivamente a tu comunidad."}
+],
+5:[
+{titulo:"Actividad · Imagen 1",texto:"Observa la situación y analiza qué norma de convivencia sería adecuada para actuar con respeto."},
+{titulo:"Actividad · Imagen 2",texto:"Relaciona la imagen con las consecuencias que pueden tener nuestras acciones en redes sociales."},
+{titulo:"Actividad · Imagen 3",texto:"Reflexiona sobre cómo tus decisiones pueden favorecer una convivencia digital respetuosa."}
+],
+6:[
+{titulo:"Actividad · Imagen 1",texto:"Observa la imagen y piensa cómo puedes participar responsablemente en una colectividad digital."},
+{titulo:"Actividad · Imagen 2",texto:"Analiza cómo el respeto, la comunicación y la colaboración pueden mejorar la convivencia."},
+{titulo:"Actividad · Imagen 3",texto:"Reflexiona sobre lo observado y propone una forma positiva de trabajar con otras personas."}
+]
+};
+
+const paginasActividad={1:4,3:4,5:4,6:7};
+
+const imagenSesion3Pagina2={
+src:"imagenes_manual/imagen_2.jpg",
+titulo:"Construye tu identidad sin filtros"
+};
+
+const imagenesCarruselBase=[
+{
+src:"https://p3.hippopx.com/preview/746/905/blank-notebook-page-broken-pencil-beige-surface-blue-surface-minimalist-design-simple-notebook-two-pencils-split-pastel-background-flat-lay-stationery.jpg",
+titulo:"Espacio para aprender"
+},
+{
+src:"https://p3.hippopx.com/preview/789/644/spiral-notebook-orange-pencil-flat-lay-pastel-background-school-themes-office-themes-white-notebook-minimalistic-design-study-tools-creative-workspace.jpg",
+titulo:"Ideas y actividades"
+},
+{
+src:"https://p3.hippopx.com/preview/740/216/notebooks-wooden-table-flat-lay-eucalyptus-leaves-writing-tools-elegant-style-desk-setup-stationery-creative-workspace-minimalist-design.jpg",
+titulo:"Reflexión y trabajo"
+}
+];
+
+const imagenesSesion1Pagina3=[
+{src:"https://share.google/q3dsQ4lFiQKO8FS7c",titulo:"Tres verdades incómodas, pero reales"},
+{src:"https://share.google/fbhIwa78AzBffm703",titulo:"Deshumanización del avatar"},
+{src:"https://share.google/QkQgtAamX6d8fXLxM",titulo:"La mala onda es contagiosa"}
+];
+
+const imagenesSesion2Pagina1=[
+{src:"https://share.google/z7jUTJtmVUDzEY9s4",titulo:"Opiniones y convivencia"},
+{src:"https://share.google/TqZ1UUTeafkLY7dMM",titulo:"Cuando opinar se convierte en agredir"},
+{src:"https://share.google/3hPU1sJfl9TQqMU4U",titulo:"Respeto y dignidad"}
+];
+
+const imagenesSesion2Pagina2=imagenesSesion2Pagina1.map(function(item){return {src:item.src,titulo:item.titulo};});
+const imagenesSesion2Pagina3=[
+{src:"https://share.google/k26mdC18JUGmc19qS",titulo:"Envidia o anhelo de imitar"},
+{src:"https://share.google/tSr6sIqeHBLqXlEbl",titulo:"El escudo del anonimato"},
+{src:"https://share.google/H1sMUM7jOygdnqYnt",titulo:"Desahogar la frustración"}
+];
+
+const imagenesSesion2Pagina4=[
+{src:"https://share.google/ccYbOfkdWBfgKDZjq",titulo:"Efecto hater"},
+{src:"https://share.google/jfauZWJK7zSNhMmin",titulo:"Consecuencias del hate"},
+{src:"https://share.google/qsYdi0hSsmLpWPkWF",titulo:"Impacto en la vida digital"}
+];
+
+const imagenesSesion2Pagina5=[
+{src:"https://share.google/HVDcRtU5CX1qbfLhD",titulo:"Estrategias en modo defensa"},
+{src:"https://share.google/yH2j5AVPcTX9sVdEw",titulo:"Bloqueo y reporte"},
+{src:"https://share.google/l1W6DzfxUeh09j6Aw",titulo:"Cuidar tu paz mental"}
+];
+
+const imagenesSesion4Pagina1=[
+{src:"https://share.google/lns9c8iYpk6qMWuvj",titulo:"Redes sociales para un bien común"},
+{src:"https://share.google/LMbsVLXGgOq2ZepBA",titulo:"Libertad con responsabilidad"},
+{src:"https://share.google/jGGYPF4Zz9PfPyRqM",titulo:"El checklist del bien común"}
+];
+
+const imagenesSesion5Pagina3=[
+{src:"https://share.google/u95sNlm7evNrTmV7v",titulo:"Netiqueta 1"},
+{src:"https://share.google/6ERufiEVdNZJrLfFO",titulo:"Netiqueta 2"},
+{src:"https://share.google/FYQR35KtQbJIeQ2NM",titulo:"Netiqueta 3"}
+];
+
+const imagenesSesion6Pagina1=[
+{src:"https://share.google/SVxaD2Y5DqIdUrbcp",titulo:"Colectividad positiva 1"},
+{src:"https://share.google/Km3GtfIrsplt9zQ7j",titulo:"Colectividad positiva 2"},
+{src:"https://share.google/mWvdZB14DJkqfXkbp",titulo:"Colectividad positiva 3"}
+];
+
+const imagenesSesion1Pagina2=[
+{
+src:"https://share.google/oYa6U5W1qSEoUUevJ",
+titulo:"Huella digital y responsabilidad"
+},
+{
+src:"https://share.google/rEHJOzRrUyWrhiZ0x",
+titulo:"Respeto en redes sociales"
+},
+{
+src:"https://share.google/VOUnHXFlv4BOOmyXJ",
+titulo:"Dignidad humana"
+}
+];
+
+const imagenesActividadSesion1=[
+{src:"https://share.google/d7XYRJCgf5KfXvJdw",titulo:"Actividad 1"},
+{src:"https://share.google/tuTOP4xN0fWi0Mr7y",titulo:"Actividad 2"},
+{src:"https://share.google/lNG203hnkneBfZLPE",titulo:"Actividad 3"}
+];
+
+let imagenesCarrusel=imagenesCarruselBase;
+
+function ocultarTodo(){
+document.querySelectorAll(".pantalla").forEach(function(p){
+p.classList.remove("activa");
+});
+document.querySelectorAll("nav>button").forEach(function(b){
+b.classList.remove("activo");
+});
+}
+
+function mostrar(id){
+ocultarTodo();
+
+const pantalla=document.getElementById(id);
+if(pantalla){
+pantalla.classList.add("activa");
+}
+
+const boton=document.getElementById("btn"+id.charAt(0).toUpperCase()+id.slice(1));
+if(boton){
+boton.classList.add("activo");
+}
+
+cerrarMenu();
+}
+
+function inicio(){
+mostrar("inicio");
+document.querySelectorAll("nav>button").forEach(function(b){
+b.classList.remove("activo");
+});
+window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function abrirMenu(){
+const boton=document.getElementById("botonSesiones");
+const menu=document.getElementById("submenuSesiones");
+
+menu.classList.toggle("abierto");
+boton.classList.toggle("abierto");
+}
+
+function cerrarMenu(){
+const menu=document.getElementById("submenuSesiones");
+const boton=document.getElementById("botonSesiones");
+
+if(menu)menu.classList.remove("abierto");
+if(boton)boton.classList.remove("abierto");
+}
+
+function seleccionarSesion(numero){
+sesionActual=numero;
+paginaActual=1;
+imagenActual=0;
+
+mostrar("sesiones");
+actualizarSesion();
+
+document.querySelectorAll("[data-sesion]").forEach(function(b){
+b.classList.remove("seleccionado");
+});
+
+document.querySelectorAll("[data-sesion='"+numero+"']").forEach(function(b){
+b.classList.add("seleccionado");
+});
+
+document.querySelectorAll("[data-lista-sesion]").forEach(function(b){
+b.classList.remove("activo");
+});
+
+document.querySelectorAll("[data-lista-sesion='"+numero+"']").forEach(function(b){
+b.classList.add("activo");
+});
+
+cerrarMenu();
+
+window.scrollTo({top:0,behavior:"smooth"});
+}
+
+let sesion4TimerInterval=null;
+let sesion4Respuestas=new Array(8).fill(false);
+
+function prepararActividadFiltroBienComun(){
+  if(!(sesionActual===4 && paginaActual===2)) return;
+  const caja=document.getElementById("sesion4Pagina2Especial");
+  const cron=document.getElementById("sesion4Cronometro");
+  const tiempo=document.getElementById("sesion4Tiempo");
+  if(!caja) return;
+  if(sesion4TimerInterval){clearInterval(sesion4TimerInterval);sesion4TimerInterval=null;}
+  sesion4Respuestas=new Array(8).fill(false);
+  caja.querySelectorAll('.respuestas-si-no').forEach(function(row){
+    row.classList.remove('bloqueada');
+    row.querySelectorAll('button').forEach(function(btn){btn.disabled=false;btn.classList.remove('seleccionado');});
+  });
+  if(cron) cron.classList.remove('agotado');
+  let restante=20;
+  if(tiempo) tiempo.textContent=restante+' s';
+  if(cron) cron.classList.remove('urgente');
+  sesion4TimerInterval=setInterval(function(){
+    restante--;
+    if(tiempo) tiempo.textContent=Math.max(restante,0)+' s';
+    if(cron && restante<=5 && restante>0) cron.classList.add('urgente');
+    if(restante<=0){
+      clearInterval(sesion4TimerInterval);
+      sesion4TimerInterval=null;
+      if(cron) cron.classList.add('agotado');
+      bloquearRespuestasPendientes();
+    }
+  },1000);
+}
+
+function bloquearRespuestasPendientes(){
+  const caja=document.getElementById("sesion4Pagina2Especial");
+  if(!caja) return;
+  caja.querySelectorAll('.respuestas-si-no').forEach(function(row,index){
+    if(!sesion4Respuestas[index]){
+      row.classList.add('bloqueada');
+      row.querySelectorAll('button').forEach(function(btn){btn.disabled=true;btn.classList.remove('seleccionado');});
+    }
+  });
+}
+
+function conectarFiltroBienComun(){
+  const caja=document.getElementById("sesion4Pagina2Especial");
+  if(!caja) return;
+  caja.querySelectorAll('.respuestas-si-no button').forEach(function(btn){
+    btn.onclick=function(){
+      const i=Number(btn.getAttribute('data-pregunta'));
+      const row=btn.parentElement;
+      if(row.classList.contains('bloqueada')) return;
+      row.querySelectorAll('button').forEach(function(b){b.classList.remove('seleccionado');});
+      btn.classList.add('seleccionado');
+      sesion4Respuestas[i]=true;
+      if(sesion4Respuestas.every(Boolean) && sesion4TimerInterval){
+        clearInterval(sesion4TimerInterval);
+        sesion4TimerInterval=null;
+      }
+    };
+  });
+  const reiniciar=document.getElementById('sesion4Reiniciar');
+  if(reiniciar) reiniciar.onclick=function(){prepararActividadFiltroBienComun();};
+}
+
+conectarFiltroBienComun();
+
+function actualizarSesion(){
+const datos=sesiones[sesionActual];
+const infografiaSesion5=document.getElementById("sesion5Pagina1Infografia");
+if(infografiaSesion5){
+  const visible=(sesionActual===5 && paginaActual===1);
+  infografiaSesion5.style.display=visible?"block":"none";
+  infografiaSesion5.setAttribute("aria-hidden",visible?"false":"true");
+}
+const youtubeSesion5Pagina3=document.getElementById("sesion5Pagina3Youtube");
+if(youtubeSesion5Pagina3){
+  const visible=(sesionActual===5 && paginaActual===3);
+  youtubeSesion5Pagina3.style.display=visible?"block":"none";
+  youtubeSesion5Pagina3.setAttribute("aria-hidden",visible?"false":"true");
+}
+const bloquePagina3Sesion=document.getElementById("sesion4Pagina3Bloque");
+if(bloquePagina3Sesion){
+  const visible=(sesionActual===4 && paginaActual===3);
+  bloquePagina3Sesion.style.display=visible?"block":"none";
+  bloquePagina3Sesion.setAttribute("aria-hidden",visible?"false":"true");
+}
+
+// La actividad del filtro del bien común pertenece EXCLUSIVAMENTE a Sesión 4, página 2.
+const especialFiltroGlobal=document.getElementById("sesion4Pagina2Especial");
+if(especialFiltroGlobal){
+  // La actividad SOLO puede existir visualmente en Sesión 4, página 2.
+  especialFiltroGlobal.style.setProperty("display","none","important");
+  especialFiltroGlobal.setAttribute("aria-hidden","true");
+}
+if(sesion4TimerInterval){
+  clearInterval(sesion4TimerInterval);
+  sesion4TimerInterval=null;
+}
+
+
+document.getElementById("tituloSesion").textContent=
+"Sesión "+sesionActual;
+
+document.getElementById("numeroSesion").textContent=
+datos.titulo;
+
+document.getElementById("tituloPagina").textContent=obtenerTituloPagina();
+if(sesionActual===6 && paginaActual===2){
+  document.getElementById("tituloPagina").textContent="Ondas de bienestar: cómo generar comunidad positiva en redes social";
+}
+if(sesionActual===6 && paginaActual===3){
+  document.getElementById("tituloPagina").textContent="Mi primera onda";
+}
+
+const actividadCollage=document.getElementById("actividadCollageSesion3Pagina3");
+const actividadPostFuturo=document.getElementById("actividadPostFuturoSesion3Pagina4");
+const esCollageSesion3Pagina3=(sesionActual===3 && paginaActual===3);
+const esPostFuturoSesion3Pagina4=(sesionActual===3 && paginaActual===4);
+const parrafoSesion=document.getElementById("parrafoSesion");
+const cajaDestacada=document.querySelector(".caja-destacada");
+if(parrafoSesion){
+parrafoSesion.style.display=(esCollageSesion3Pagina3)?"none":"";
+if(sesionActual===5 && paginaActual===1){
+  parrafoSesion.textContent="El objetivo de las normas de convivencia en las redes sociales es que visualices que tu comportamiento en internet no solo afecta el presente, sino que actúa como una llave que abre o cierra puertas en tu futuro personal, escolar y profesional.";
+}
+const textoPagina=obtenerTextoPagina();
+if(esPostFuturoSesion3Pagina4){
+parrafoSesion.style.display="block";
+parrafoSesion.textContent="Un mensaje para mí yo del futuro";
+}else if(sesionActual===5 && paginaActual===1){
+parrafoSesion.style.display="block";
+parrafoSesion.textContent="El objetivo de las normas de convivencia en las redes sociales es que visualices que tu comportamiento en internet no solo afecta el presente, sino que actúa como una llave que abre o cierra puertas en tu futuro personal, escolar y profesional.";
+}else if(sesionActual===3 && paginaActual===1){
+parrafoSesion.innerHTML=textoPagina.replace(/\n\n/g,"<br><br>");
+}else if(sesionActual===6 && paginaActual===1){
+parrafoSesion.textContent="El Internet y las redes sociales revolucionaron por completo la forma en que nos conectamos. Ya no importa si alguien vive a la vuelta de la esquina o en el otro lado del mundo; las fronteras geográficas dejaron de ser una barrera para crear nuestro propio espacio virtual.";
+ }else if(sesionActual===6 && paginaActual===2){
+parrafoSesion.textContent="Cada acción individual positiva que realizas en tus redes sociales puede transformar el entorno, generar círculos que se expanden y llegar más lejos de lo que puedes imaginar.";
+ }else if(sesionActual===5 && (paginaActual===3 || paginaActual===4)){
+parrafoSesion.style.display="none";
+}else{
+parrafoSesion.textContent=textoPagina;
+}
+}
+if(cajaDestacada){
+cajaDestacada.style.display=esCollageSesion3Pagina3?"none":"";
+}
+if(actividadCollage){
+actividadCollage.style.display=esCollageSesion3Pagina3?"block":"none";
+}
+if(actividadPostFuturo){
+actividadPostFuturo.style.display=esPostFuturoSesion3Pagina4?"block":"none";
+}
+
+const textoReflexion=document.getElementById("textoReflexion");
+if(textoReflexion){
+const etiquetaReflexion=textoReflexion.previousElementSibling;
+if(etiquetaReflexion){
+etiquetaReflexion.style.display=(sesionActual===1 && paginaActual===2)?"none":"";
+}
+textoReflexion.textContent=(sesionActual===1 && paginaActual===2)
+?"¿Son las redes sociales las tóxicas o las personas son las \"tóxicas\"?"
+:(sesionActual===3 && paginaActual===1)
+?"¿Creen que una red social muestra realmente quiénes somos?"
+:(sesionActual===3 && paginaActual===2)
+?"¿Qué pasa cuando juzgamos y qué cambia cuando elegimos la empatía?"
+ :(sesionActual===6 && paginaActual===3)
+?"Tu reto es escribir sobre aquello que te apasiona."
+:(sesionActual===3 && paginaActual===4)
+?"¿Quién quiero ser?"
+:(sesionActual===2 && paginaActual===1)
+?"¿Se debe decir todo lo que se puede decir?"
+:(sesionActual===2 && paginaActual===4)
+?"¿Cuándo una opinión se convierte en agresión?"
+:(sesionActual===1 && paginaActual===3)
+?"Tu huella digital habla de ti: cuídala"
+:(sesionActual===4 && paginaActual===3)
+?"No se defiende la libertad expresando odio, sino respetando a las demás personas: la libertad de expresión se ejerce con responsabilidad, y termina donde comienza el derecho de las otras personas."
+:"Promover el respeto en redes sociales ayuda a crear espacios más seguros y agradables para todas las personas.";
+}
+
+document.getElementById("indicadorPagina").textContent=
+"Página "+paginaActual+" / "+datos.paginas;
+
+document.getElementById("ubicacion").textContent=
+"Sesión "+sesionActual+" · Página "+paginaActual;
+
+document.getElementById("anteriorPagina").disabled=
+paginaActual===1;
+
+document.getElementById("siguientePagina").disabled=
+paginaActual===datos.paginas;
+
+actualizarImagen();
+}
+
+function obtenerTituloPagina(){
+const titulos={
+1:[
+"Respeto en redes sociales",
+"Respeto en redes sociales",
+"Reflexión",
+"Actividad"
+],
+2:[
+"Cuando en opinar se convierte en agredir",
+"¿Qué es una persona hater exactamente?",
+"El perfil de la persona Hater",
+"El \"efecto hater\": lo que pasa en tu mundo cuando llega el hate.",
+"Reflexión"
+],
+3:[
+"Mi perfil real vs Mi perfil digital",
+"Construye tu identidad sin filtros",
+"Collage de mi perfil",
+"Post para mí yo del futuro"
+],
+4:[
+"Redes sociales para un bien común",
+"El filtro del bien común",
+"Viral o fatal: el tribunal del bien común"
+],
+5:[
+"Normas de convivencia",
+"¿Abre o Cierra puertas?",
+"Normas de comportamiento",
+"Si necesitas ayuda...."
+],
+6:[
+"Colectividad positiva",
+"Ondas de bienestar: cómo generar comunidad positiva en redes social",
+"Mi primera onda"
+]
+};
+
+return titulos[sesionActual][paginaActual-1] ||
+"Contenido de la sesión";
+}
+
+function obtenerTextoPagina(){
+const textos={
+1:[
+"Las redes sociales permiten comunicarnos rápidamente con muchas personas, pero también implican responsabilidades. Todo lo que publicamos deja una huella digital, es decir, un registro que puede permanecer en Internet por mucho tiempo.",
+"Seguramente has escuchado mil veces que \"las redes sociales son tóxicas\", pero ¿alguna vez te has detenido a pensar si el problema es el algoritmo o lo que nosotras las personas hacemos con él?. El estudio reveló que la \"toxicidad es un patrón humano que se repite por voluntad propia, desde los antiguos foros de texto hasta las plataformas actuales.\"",
+"El estudio reconoce que muchas interacciones pueden ser buenas y que es posible mejorar la convivencia en el mundo digital, e invita, a través de la educación digital, a hacernos conscientes de la forma en que nuestras acciones en línea afectan a las personas con quienes nos conectamos, y a poner en práctica valores como el respeto, la empatía y la responsabilidad cuando usamos redes sociales.",
+"Realiza las dos actividades indicadas y comparte tus ideas cuando corresponda."
+],
+2:[
+"Una estudiante publica en su red social el siguiente comentario: “En mi escuela ocurren burlas constantes hacia ciertas personas por su apariencia, su forma de hablar o sus gustos, por ello propongo que esa conducta cambie para construir un ambiente más respetuoso e incluyente”",
+"Una persona hater es alguien que vive para tirar hate (odio) o mala vibra de forma constante y hostil. Significa \"persona odiadora\" o \"aborrecedora\". Y Se caracteriza por expresar críticas negativas o aversión hacia algo o alguien, y se esconde detrás de la burla, la ironía pesada y el humor negro para atacar cualquier cosa: desde tu música favorita hasta tus creencias o tu forma de vestir.",
+"A veces ayuda entender qué pasa por la cabeza de estas personas para no tomárnoslo como algo personal o \"engancharnos\" y, aunque sus motivaciones puedan variar de una persona a otra, existen algunas razones comunes para su comportamiento:",
+"Que alguien te tire mala vibra en redes no es solo \"un comentario y ya\". Tiene consecuencias reales en cómo te sientes y cómo vives tu vida digital.",
+"Quien odia va a odiar sin importar lo que hagas. Lo mejor que puedes hacer es seguir siendo tú, fomentar la empatía y recordar que detrás de cada usuario hay una persona real."
+],
+3:[
+"Actualmente, las redes sociales forman parte de la vida diaria de las y los adolescentes. En ellas se comparten gustos, opiniones, fotos y momentos importantes; sin embargo, muchas veces se muestra solo una parte de quienes somos.\n\nEs frecuente que las redes sociales funcionen como una vitrina donde mostramos nuestra mejor versión para obtener aprobación o evitar el juicio de las demás personas. Sin embargo, detrás de cada pantalla hay una persona real, con inseguridades, sentimientos y experiencias que no siempre caben en una publicación.",
+"Compara la imagen que presentas en redes con la manera en que eres en otros espacios.",
+"Elabora el collage de tu perfil de acuerdo con las indicaciones de la actividad.",
+"Recupera tus reflexiones sobre identidad y redes sociales."
+],
+4:[
+"El bien común es el conjunto de condiciones que nos ayuda a que todas las personas estemos bien en la comunidad. En redes es como cuidar bien el aire pero digital.",
+"Evaluar rápidamente el impacto de las acciones digitales en la convivencia escolar y comunitaria.",
+"Las redes sociales no son solo apps, son un espacio para fortalecer la convivencia. Compartir algo falso daña el ambiente de la escuela; cuidar las redes es como \"cuidar el aire que respiramos, pero en versión digital”."],
+5:[
+"Las normas ayudan a establecer formas de interacción respetuosas dentro de los espacios digitales.",
+"Reflexionar sobre cómo una publicación en redes sociales puede generar oportunidades o afectar nuestra imagen personal, escolar y profesional.",
+"La Netiqueta es un conjunto de normas para ser educados y respetuosos en internet nos ayuda a relacionarnos mejor con otras personas mientras expresamos nuestras opiniones y respetamos la de los demás también nos ayuda a evitar mal entendidos y problema con el resto de usuarios de internet.",
+"Analiza si determinadas acciones pueden abrir o cerrar puertas en el futuro."
+],
+6:[
+"La participación responsable puede contribuir a construir espacios digitales positivos.",
+"Una colectividad positiva requiere considerar a las demás personas.",
+"Lograr un efecto dominó en redes no es buscar que algo se haga viral o compartir ideas sin sentido ni dirección. El verdadero efecto dominó trata de crear conexiones reales y apoyarnos en lugar de tirarnos hate. Ustedes tienen el poder de construir olas de impacto positivo en su comunidad."
+]
+};
+
+return textos[sesionActual][paginaActual-1] ||
+"Consulta el contenido correspondiente en el manual.";
+}
+
+
+let canvasFotoFuturoInicializado=false;
+let ctxFotoFuturo=null;
+let dibujandoFotoFuturo=false;
+
+function inicializarCanvasFotoFuturo(){
+const canvas=document.getElementById("canvasFotoFuturo");
+if(!canvas || canvasFotoFuturoInicializado)return;
+ctxFotoFuturo=canvas.getContext("2d");
+canvasFotoFuturoInicializado=true;
+
+function posicionPuntero(event){
+const rect=canvas.getBoundingClientRect();
+return {
+x:(event.clientX-rect.left)*(canvas.width/rect.width),
+y:(event.clientY-rect.top)*(canvas.height/rect.height)
+};
+}
+
+canvas.addEventListener("pointerdown",function(event){
+dibujandoFotoFuturo=true;
+canvas.setPointerCapture(event.pointerId);
+const p=posicionPuntero(event);
+ctxFotoFuturo.beginPath();
+ctxFotoFuturo.moveTo(p.x,p.y);
+});
+canvas.addEventListener("pointermove",function(event){
+if(!dibujandoFotoFuturo)return;
+const p=posicionPuntero(event);
+ctxFotoFuturo.lineTo(p.x,p.y);
+ctxFotoFuturo.strokeStyle="#5da8cf";
+ctxFotoFuturo.lineWidth=5;
+ctxFotoFuturo.lineCap="round";
+ctxFotoFuturo.lineJoin="round";
+ctxFotoFuturo.stroke();
+});
+canvas.addEventListener("pointerup",function(){dibujandoFotoFuturo=false;});
+canvas.addEventListener("pointercancel",function(){dibujandoFotoFuturo=false;});
+
+const input=document.getElementById("fotoFuturoInput");
+input.addEventListener("change",function(){
+const archivo=input.files && input.files[0];
+if(!archivo)return;
+const lector=new FileReader();
+lector.onload=function(e){
+const img=new Image();
+img.onload=function(){
+ctxFotoFuturo.clearRect(0,0,canvas.width,canvas.height);
+ctxFotoFuturo.fillStyle="#f4fbff";
+ctxFotoFuturo.fillRect(0,0,canvas.width,canvas.height);
+const escala=Math.min(canvas.width/img.width,canvas.height/img.height);
+const w=img.width*escala;
+const h=img.height*escala;
+ctxFotoFuturo.drawImage(img,(canvas.width-w)/2,(canvas.height-h)/2,w,h);
+};
+img.src=e.target.result;
+};
+lector.readAsDataURL(archivo);
+});
+}
+
+function limpiarCanvasFuturo(){
+const canvas=document.getElementById("canvasFotoFuturo");
+if(!canvas)return;
+inicializarCanvasFotoFuturo();
+ctxFotoFuturo.clearRect(0,0,canvas.width,canvas.height);
+ctxFotoFuturo.fillStyle="#f4fbff";
+ctxFotoFuturo.fillRect(0,0,canvas.width,canvas.height);
+}
+
+function obtenerTextoPostFuturo(){
+const campos=[
+["¿Quién quiero ser?",document.querySelector('#actividadPostFuturoSesion3Pagina4 textarea[aria-label="Quién quiero ser"]')],
+["¿Qué valores quiero conservar?",document.querySelector('#actividadPostFuturoSesion3Pagina4 textarea[aria-label="Qué valores quiero conservar"]')],
+["¿Qué habilidades quiero desarrollar?",document.querySelector('#actividadPostFuturoSesion3Pagina4 textarea[aria-label="Qué habilidades quiero desarrollar"]')],
+["¿Cómo quiero usar redes sociales sin perder mi esencia?",document.querySelector('#actividadPostFuturoSesion3Pagina4 textarea[aria-label="Cómo quiero usar redes sociales sin perder mi esencia"]')],
+["Mi mensaje para mi yo del futuro",document.querySelector('#actividadPostFuturoSesion3Pagina4 textarea[aria-label="Mi mensaje para mi yo del futuro"]')]
+];
+let texto="Post para mí yo del futuro\\n\\nUn mensaje para mí yo del futuro\\n";
+campos.forEach(function(item){texto+="\\n"+item[0]+":\\n"+(item[1]?item[1].value:"-")+"\\n";});
+return texto;
+}
+
+function enviarPostFuturoPorCorreo(){
+const correo=document.getElementById("correoPostFuturo");
+const destino=(correo && correo.value.trim())||"";
+if(!destino){
+alert("Escribe primero tu correo electrónico.");
+if(correo)correo.focus();
+return;
+}
+const asunto="Post para mí yo del futuro";
+const cuerpo=obtenerTextoPostFuturo();
+const enlace="mailto:"+encodeURIComponent(destino)+"?subject="+encodeURIComponent(asunto)+"&body="+encodeURIComponent(cuerpo);
+window.location.href=enlace;
+}
+
+document.addEventListener("DOMContentLoaded",function(){
+inicializarCanvasFotoFuturo();
+});
+
+function lanzarEstrellaEscritura(textarea){
+const actividad=document.getElementById("actividadCollageSesion3Pagina3") ||
+document.getElementById("actividadPostFuturoSesion3Pagina4") ||
+textarea.closest(".contenido, .tarjeta, .card, .actividad, section, main, body");
+if(!actividad)return;
+
+const estrella=document.createElement("span");
+estrella.className="estrella-escritura";
+estrella.textContent=["✦","✧","★","⋆"][Math.floor(Math.random()*4)];
+
+const rect=textarea.getBoundingClientRect();
+const areaRect=actividad.getBoundingClientRect();
+
+estrella.style.left=(rect.left-areaRect.left+Math.min(rect.width-18,Math.max(8,rect.width*.72)))+"px";
+estrella.style.top=(rect.top-areaRect.top+8)+"px";
+estrella.style.setProperty("--dx",(Math.random()*50-25)+"px");
+estrella.style.setProperty("--dy",(-35-Math.random()*25)+"px");
+
+actividad.appendChild(estrella);
+setTimeout(function(){estrella.remove();},900);
+}
+
+document.addEventListener("input",function(event){
+if(!event.target.matches("textarea, input[type=\"text\"], input[type=\"search\"]"))return;
+
+const ahora=Date.now();
+if(!event.target.dataset.ultimaEstrella ||
+ahora-Number(event.target.dataset.ultimaEstrella)>110){
+event.target.dataset.ultimaEstrella=String(ahora);
+lanzarEstrellaEscritura(event.target);
+}
+});
+
+
+
+
+
+/* Animación de estrellas al escribir — página 4 de la Sesión 3 */
+(function(){
+  function crearEstrella(campo){
+    const pagina = document.getElementById("actividadPostFuturoSesion3Pagina4");
+    if(!pagina || !pagina.contains(campo)) return;
+
+    const estrella = document.createElement("span");
+    estrella.className = "estrella-post-futuro";
+
+    const formas = ["✦","★","✧","⋆","✦"];
+    estrella.textContent = formas[Math.floor(Math.random()*formas.length)];
+
+    const campoRect = campo.getBoundingClientRect();
+    const paginaRect = pagina.getBoundingClientRect();
+
+    estrella.style.left =
+      (campoRect.left - paginaRect.left + campoRect.width * (.70 + Math.random()*.18)) + "px";
+    estrella.style.top =
+      (campoRect.top - paginaRect.top + Math.min(28, Math.max(8,campoRect.height*.20))) + "px";
+
+    estrella.style.setProperty("--dx1",(Math.random()*50-25)+"px");
+    estrella.style.setProperty("--dy1",(-25-Math.random()*20)+"px");
+    estrella.style.setProperty("--dx2",(Math.random()*100-50)+"px");
+    estrella.style.setProperty("--dy2",(-55-Math.random()*40)+"px");
+
+    pagina.appendChild(estrella);
+
+    setTimeout(function(){
+      if(estrella.parentNode) estrella.parentNode.removeChild(estrella);
+    },1100);
+  }
+
+  document.addEventListener("input",function(event){
+    const campo=event.target;
+    const pagina=document.getElementById("actividadPostFuturoSesion3Pagina4");
+
+    if(!pagina || !pagina.contains(campo)) return;
+
+    if(!campo.matches("textarea, input[type='text'], input[type='email']")) return;
+
+    const ahora=Date.now();
+    const anterior=Number(campo.dataset.ultimaEstrella || 0);
+
+    if(ahora-anterior < 90) return;
+
+    campo.dataset.ultimaEstrella=String(ahora);
+    crearEstrella(campo);
+  },true);
+})();
+
+
+let puertasSlideActual=0;
+let puertasInicioX=null;
+function actualizarCarruselPuertas(){
+  const track=document.getElementById("puertasTrack");
+  const dots=document.querySelectorAll("#puertasIndicadores .puertas-dot");
+  if(track) track.style.transform="translateX(-"+(puertasSlideActual*100)+"%)";
+  dots.forEach((dot,i)=>dot.classList.toggle("activo",i===puertasSlideActual));
+  document.querySelectorAll("#sesion5Pagina2Actividad .puerta-respuesta").forEach(btn=>btn.classList.remove("seleccionada"));
+}
+function moverCarruselPuertas(delta){
+  puertasSlideActual=(puertasSlideActual+delta+4)%4;
+  actualizarCarruselPuertas();
+}
+(function(){
+  function inicializar(){
+    const track=document.getElementById("puertasTrack");
+    const carrusel=document.getElementById("puertasCarrusel");
+    const dots=document.querySelectorAll("#puertasIndicadores .puertas-dot");
+    if(!track || !carrusel || carrusel.dataset.inicializado==="1") return;
+    carrusel.dataset.inicializado="1";
+    dots.forEach((dot,i)=>dot.addEventListener("click",()=>{puertasSlideActual=i;actualizarCarruselPuertas();}));
+    carrusel.addEventListener("touchstart",e=>{puertasInicioX=e.changedTouches[0].clientX;},{passive:true});
+    carrusel.addEventListener("touchend",e=>{
+      if(puertasInicioX===null)return;
+      const dx=e.changedTouches[0].clientX-puertasInicioX;
+      if(Math.abs(dx)>45)moverCarruselPuertas(dx<0?1:-1);
+      puertasInicioX=null;
+    },{passive:true});
+    let mouseX=null;
+    carrusel.addEventListener("pointerdown",e=>{if(e.pointerType==="mouse")mouseX=e.clientX;});
+    carrusel.addEventListener("pointerup",e=>{
+      if(mouseX===null)return;
+      const dx=e.clientX-mouseX;
+      if(Math.abs(dx)>45)moverCarruselPuertas(dx<0?1:-1);
+      mouseX=null;
+    });
+    document.querySelectorAll("#sesion5Pagina2Actividad .puerta-respuesta").forEach(btn=>{
+      btn.addEventListener("click",()=>{
+        document.querySelectorAll("#sesion5Pagina2Actividad .puerta-respuesta").forEach(b=>b.classList.remove("seleccionada"));
+        btn.classList.add("seleccionada");
+      });
+    });
+    actualizarCarruselPuertas();
+  }
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",inicializar);else inicializar();
+})();
+
+function enviarHobbiesPorCorreo(){
+  const texto=document.getElementById("hobbiesTextoS6P3");
+  const correo=document.getElementById("hobbiesCorreoS6P3");
+  const contenido=(texto && texto.value.trim())||"";
+  const destino=(correo && correo.value.trim())||"";
+  if(!contenido){ alert("Escribe primero tu reflexión sobre tu pasatiempo."); if(texto) texto.focus(); return; }
+  if(!destino){ alert("Escribe primero tu correo electrónico."); if(correo) correo.focus(); return; }
+  const asunto="Actividad Hobbies - Mi primera onda";
+  const cuerpo="Mi reflexión sobre mi pasatiempo:\n\n"+contenido;
+  window.location.href="mailto:"+encodeURIComponent(destino)+"?subject="+encodeURIComponent(asunto)+"&body="+encodeURIComponent(cuerpo);
+}
+
+function cambiarPagina(direccion){
+const total=sesiones[sesionActual].paginas;
+
+paginaActual+=direccion;
+
+if(paginaActual<1)paginaActual=1;
+if(paginaActual>total)paginaActual=total;
+
+imagenActual=0;
+actualizarSesion();
+
+window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function actualizarImagen(){
+// Cada contenido especial se oculta primero. Después solo se activa en su página exacta.
+const hobbiesEspecial=document.getElementById("actividadHobbiesS6P3");
+if(hobbiesEspecial){ hobbiesEspecial.style.setProperty("display","none","important"); hobbiesEspecial.setAttribute("aria-hidden","true"); }
+const ayudaS5=document.getElementById("sesion5Pagina4Ayuda");
+if(ayudaS5){ ayudaS5.style.display="none"; ayudaS5.setAttribute("aria-hidden","true"); }
+const puertasS5=document.getElementById("sesion5Pagina2Actividad");
+if(puertasS5){ puertasS5.style.display="none"; puertasS5.setAttribute("aria-hidden","true"); }
+const esFiltroBienComun=(sesionActual===4 && paginaActual===2);
+const esSesion5Pagina1=(sesionActual===5 && paginaActual===1);
+const infografiaSesion5=document.getElementById("sesion5Pagina1Infografia");
+if(infografiaSesion5){
+  infografiaSesion5.style.display=esSesion5Pagina1?"block":"none";
+}
+const especialFiltro=document.getElementById("sesion4Pagina2Especial");
+const marcoCarrusel=document.querySelector(".carrusel-marco");
+const controlesCarrusel=document.getElementById("controlesCarrusel");
+const indicadorCarrusel=document.getElementById("indicadorImagen");
+const infoImagen=document.querySelector(".info-imagen");
+const cajaDestacada=document.querySelector(".caja-destacada");
+if(esFiltroBienComun){
+  // Esta actividad se habilita únicamente en Sesión 4, página 2.
+  const contenidoPrincipal=document.getElementById("contenidoImagenPrincipal");
+  if(contenidoPrincipal) contenidoPrincipal.classList.add("filtro-bien-comun");
+  if(marcoCarrusel) marcoCarrusel.style.display="none";
+  if(controlesCarrusel) controlesCarrusel.style.display="none";
+  if(indicadorCarrusel) indicadorCarrusel.style.display="none";
+  if(especialFiltro){
+    especialFiltro.style.setProperty("display","block","important");
+    especialFiltro.setAttribute("aria-hidden","false");
+  }
+  if(cajaDestacada) cajaDestacada.style.display="none";
+  if(infoImagen) infoImagen.style.display="block";
+  const sub=document.getElementById("subtituloImagen");
+  if(sub) sub.style.display="none";
+  const p2=document.getElementById("parrafoSesion2");
+  if(p2) p2.style.display="none";
+  prepararActividadFiltroBienComun();
+}else{
+  const contenidoPrincipal=document.getElementById("contenidoImagenPrincipal");
+  if(contenidoPrincipal) contenidoPrincipal.classList.remove("filtro-bien-comun");
+  if(marcoCarrusel) marcoCarrusel.style.display="";
+  if(controlesCarrusel) controlesCarrusel.style.display="";
+  if(indicadorCarrusel) indicadorCarrusel.style.display="";
+  if(especialFiltro){
+    especialFiltro.style.setProperty("display","none","important");
+    especialFiltro.setAttribute("aria-hidden","true");
+  }
+  if(cajaDestacada) cajaDestacada.style.display="";
+  if(infoImagen) infoImagen.style.display="";
+  const sub=document.getElementById("subtituloImagen");
+  if(sub) sub.style.display="";
+  const p2=document.getElementById("parrafoSesion2");
+  if(p2) p2.style.display="";
+}
+
+const contenidoImagen=document.querySelector(".contenido-imagen");
+const esSesion5Pagina2=(sesionActual===5 && paginaActual===2);
+const esSesion5Pagina3=(sesionActual===5 && paginaActual===3);
+const introSesion5P3=document.getElementById("sesion5Pagina3Intro");
+const actividadSes5P2=document.getElementById("sesion5Pagina2Actividad");
+const esSesion5Pagina4=(sesionActual===5 && paginaActual===4);
+const ayudaSesion5P4=document.getElementById("sesion5Pagina4Ayuda");
+if(actividadSes5P2){
+  actividadSes5P2.style.display=esSesion5Pagina2?"block":"none";
+  actividadSes5P2.setAttribute("aria-hidden",esSesion5Pagina2?"false":"true");
+}
+if(ayudaSesion5P4){
+  ayudaSesion5P4.style.display=esSesion5Pagina4?"block":"none";
+  ayudaSesion5P4.setAttribute("aria-hidden",esSesion5Pagina4?"false":"true");
+}
+
+// Sesión 5, página 1: reemplaza únicamente aquí el carrusel y su texto lateral por la infografía.
+if(esSesion5Pagina1){
+  if(contenidoImagen) contenidoImagen.style.display="none";
+  if(infografiaSesion5) infografiaSesion5.style.display="block";
+  return;
+}
+
+if(esSesion5Pagina2){
+  if(contenidoImagen) contenidoImagen.style.display="none";
+  if(infografiaSesion5) infografiaSesion5.style.display="none";
+  return;
+}
+
+if(introSesion5P3){
+  introSesion5P3.style.display=esSesion5Pagina3?"block":"none";
+}
+
+const esSesion6Pagina1=(sesionActual===6 && paginaActual===1);
+const esSesion6Pagina2=(sesionActual===6 && paginaActual===2);
+
+if(esSesion6Pagina1){
+  if(infografiaSesion5) infografiaSesion5.style.display="none";
+  if(contenidoImagen) contenidoImagen.style.display="grid";
+  if(contenidoImagen){
+    contenidoImagen.style.gridTemplateColumns="43% 57%";
+    contenidoImagen.style.gap="25px";
+  }
+  const marco=document.querySelector(".carrusel-marco");
+  const controles=document.getElementById("controlesCarrusel");
+  const indicador=document.getElementById("indicadorImagen");
+  const info=document.querySelector(".info-imagen");
+  const sub=document.getElementById("subtituloImagen");
+  const p2=document.getElementById("parrafoSesion2");
+  if(marco) marco.style.display="";
+  if(controles) controles.style.display="";
+  if(indicador) indicador.style.display="";
+  if(info){
+    info.style.display="block";
+    info.style.width="";
+    info.style.gridColumn="";
+  }
+  if(sub) sub.style.display="none";
+  if(p2){
+    p2.style.display="block";
+    p2.innerHTML="El navegar en redes de forma individual no es igual a ser parte de una comunidad. La colectividad positiva en redes suma, es inclusiva, y representa un espacio donde las personas pueden expresarse libremente, pero con respeto a la gran diversidad de pensamientos y formas de ver el mundo, apoyándose mutuamente en sus desafíos personales, físicos, educativos, creativos o sociales.<br><br>El Internet nos da la tecnología, pero las reglas del juego las ponemos cada una de las personas que formamos parte de una comunidad virtual. En nuestras manos está transformarlas en espacios seguros, positivos y sin toxicidad, donde valga la pena estar. Este superpoder lo tenemos cada una de las personas que navegan en las redes";
+  }
+  imagenesCarrusel=imagenesSesion6Pagina1;
+  imagenActual=Math.min(imagenActual,imagenesCarrusel.length-1);
+  renderizarCarrusel();
+  return;
+}
+
+if(esSesion6Pagina2){
+  imagenesCarrusel=imagenesCarruselBase;
+  imagenActual=Math.min(imagenActual,imagenesCarrusel.length-1);
+  if(infografiaSesion5) infografiaSesion5.style.display="none";
+  if(contenidoImagen) contenidoImagen.style.display="grid";
+  if(contenidoImagen){
+    contenidoImagen.style.gridTemplateColumns="43% 57%";
+    contenidoImagen.style.gap="25px";
+  }
+  const marco=document.querySelector(".carrusel-marco");
+  const controles=document.getElementById("controlesCarrusel");
+  const indicador=document.getElementById("indicadorImagen");
+  const info=document.querySelector(".info-imagen");
+  const sub=document.getElementById("subtituloImagen");
+  const p2=document.getElementById("parrafoSesion2");
+  if(marco) marco.style.display="";
+  if(controles) controles.style.display="";
+  if(indicador) indicador.style.display="";
+  if(info){
+    info.style.display="block";
+    info.style.width="";
+    info.style.gridColumn="";
+  }
+  if(sub) sub.style.display="none";
+  if(p2){
+    p2.style.display="block";
+    p2.innerHTML='<p style="margin:0 0 16px;line-height:1.55;"><strong>1. Enciende la chispa:</strong> Todo gran proyecto empieza con una sola persona o un grupo pequeño con la motivación suficiente para empezar algo nuevo.</p>' +
+      '<p style="margin:0 0 16px;line-height:1.55;"><strong>2. Pasa la voz:</strong> Invita primero a tus amistades más cercanas, a las personas que confían en ti, que encuentran en tu proyecto cosas en común.</p>' +
+      '<p style="margin:0 0 16px;line-height:1.55;"><strong>3. Suma talentos:</strong> De acuerdo con la diversidad de conocimientos y talentos que se reúnen, una persona puede diseñar y editar los videos, otra puede diseñar las publicaciones y mensajes, otra más organizar.</p>' +
+      '<p style="margin:0;line-height:1.55;"><strong>4. Crecimiento sostenido:</strong> Esas pequeñas acciones diarias se convierten en una comunidad virtual participativa y colaborativa.</p>';
+  }
+  renderizarCarrusel();
+  return;
+}
+
+if(esSesion5Pagina3){
+  if(infografiaSesion5) infografiaSesion5.style.display="none";
+  if(contenidoImagen) contenidoImagen.style.display="grid";
+  if(contenidoImagen){
+    contenidoImagen.style.gridTemplateColumns="43% 57%";
+    contenidoImagen.style.gap="25px";
+  }
+  const marco=document.querySelector(".carrusel-marco");
+  const controles=document.getElementById("controlesCarrusel");
+  const indicador=document.getElementById("indicadorImagen");
+  const info=document.querySelector(".info-imagen");
+  const sub=document.getElementById("subtituloImagen");
+  const p2=document.getElementById("parrafoSesion2");
+  if(marco) marco.style.display="";
+  if(controles) controles.style.display="";
+  if(indicador) indicador.style.display="";
+  if(info){
+    info.style.display="block";
+    info.style.width="";
+    info.style.gridColumn="";
+  }
+  if(sub) sub.style.display="none";
+  if(p2){
+    p2.style.display="block";
+    p2.textContent="La Netiqueta es un conjunto de normas para ser educados y respetuosos en internet nos ayuda a relacionarnos mejor con otras personas mientras expresamos nuestras opiniones y respetamos la de los demás también nos ayuda a evitar mal entendidos y problema con el resto de usuarios de internet.";
+  }
+  imagenesCarrusel=imagenesSesion5Pagina3;
+  imagenActual=Math.min(imagenActual,imagenesCarrusel.length-1);
+  renderizarCarrusel();
+  return;
+}
+
+if(esSesion5Pagina4){
+  if(contenidoImagen) contenidoImagen.style.display="none";
+  if(infografiaSesion5) infografiaSesion5.style.display="none";
+  return;
+}
+
+const esSesion6Pagina3=(sesionActual===6 && paginaActual===3);
+const actividadHobbiesS6P3=document.getElementById("actividadHobbiesS6P3");
+if(actividadHobbiesS6P3){actividadHobbiesS6P3.style.setProperty("display",esSesion6Pagina3?"block":"none","important");actividadHobbiesS6P3.setAttribute("aria-hidden",esSesion6Pagina3?"false":"true");}
+if(esSesion6Pagina3){
+if(contenidoImagen) contenidoImagen.style.display="none";
+const marcoS6P3=document.querySelector(".carrusel-marco");
+const controlesS6P3=document.getElementById("controlesCarrusel");
+const indicadorS6P3=document.getElementById("indicadorImagen");
+const infoS6P3=document.querySelector(".info-imagen");
+if(marcoS6P3) marcoS6P3.style.display="none";
+if(controlesS6P3) controlesS6P3.style.display="none";
+if(indicadorS6P3) indicadorS6P3.style.display="none";
+if(infoS6P3) infoS6P3.style.display="none";
+const editor=document.getElementById("hobbiesTextoS6P3"), color=document.getElementById("hobbiesColorS6P3"), fuente=document.getElementById("hobbiesFuenteS6P3");
+if(editor&&color) editor.style.color=color.value; if(editor&&fuente) editor.style.fontFamily=fuente.value;
+if(color&&!color.dataset.enlazado){color.dataset.enlazado="1";color.addEventListener("input",function(){if(editor)editor.style.color=color.value;});}
+if(fuente&&!fuente.dataset.enlazado){fuente.dataset.enlazado="1";fuente.addEventListener("change",function(){if(editor)editor.style.fontFamily=fuente.value;});}
+return;
+}
+
+const esSesion4Pagina3Direct=(sesionActual===4 && paginaActual===3);
+// Siempre limpiamos el estado exclusivo de la página 3 antes de decidir qué mostrar.
+if(contenidoImagen) contenidoImagen.classList.remove("sesion4-pagina3-activa");
+const especialPagina3=document.getElementById("sesion4Pagina3Especial");
+const textoPagina3=document.getElementById("sesion4Pagina3Texto");
+if(especialPagina3){
+  especialPagina3.style.display="none";
+  especialPagina3.setAttribute("aria-hidden","true");
+}
+if(textoPagina3) textoPagina3.style.display="none";
+
+const bloquePagina3=document.getElementById("sesion4Pagina3Bloque");
+if(bloquePagina3){
+  bloquePagina3.style.display="none";
+  bloquePagina3.setAttribute("aria-hidden","true");
+}
+if(esSesion4Pagina3Direct){
+  // Página 3 de Sesión 4: el carrusel se oculta y el bloque de tres recuadros
+  // se muestra dentro del área de información, ocupando todo el ancho.
+  if(contenidoImagen){
+    contenidoImagen.classList.remove("sesion4-pagina3-activa");
+    contenidoImagen.style.display="block";
+  }
+  const marco=document.querySelector(".carrusel-marco");
+  const controles=document.getElementById("controlesCarrusel");
+  const indicador=document.getElementById("indicadorImagen");
+  const info=document.querySelector(".info-imagen");
+  const sub=document.getElementById("subtituloImagen");
+  const p2=document.getElementById("parrafoSesion2");
+  if(marco) marco.style.display="none";
+  if(controles) controles.style.display="none";
+  if(indicador) indicador.style.display="none";
+  if(info){
+    info.style.display="block";
+    info.style.width="100%";
+    info.style.gridColumn="1 / -1";
+  }
+  if(sub) sub.style.display="none";
+  if(p2) p2.style.display="none";
+  if(textoPagina3) textoPagina3.style.display="none";
+  if(especialPagina3){especialPagina3.style.display="none";especialPagina3.setAttribute("aria-hidden","true");}
+  if(bloquePagina3){
+    bloquePagina3.style.display="block";
+    bloquePagina3.style.width="100%";
+    bloquePagina3.setAttribute("aria-hidden","false");
+  }
+  return;
+}
+
+const sesion4Pagina3Especial=document.getElementById("sesion4Pagina3Especial");
+const esSesion4Pagina3=(sesionActual===4 && paginaActual===3);
+
+// Restauración del diseño original: en todas las páginas normales,
+// el carrusel queda a la IZQUIERDA y la información a la DERECHA.
+// La única excepción es Sesión 4, página 3, donde el carrusel se reemplaza
+// por los tres recuadros solicitados.
+if(!esSesion4Pagina3 && contenidoImagen){
+  contenidoImagen.style.display="grid";
+  contenidoImagen.style.gridTemplateColumns="43% 57%";
+  contenidoImagen.style.gap="25px";
+  const columnaCarrusel=contenidoImagen.children[0];
+  const columnaInfo=contenidoImagen.querySelector(":scope > .info-imagen");
+  if(columnaCarrusel){
+    columnaCarrusel.style.display="block";
+    columnaCarrusel.style.width="";
+    columnaCarrusel.style.gridColumn="";
+  }
+  if(columnaInfo){
+    columnaInfo.style.display="block";
+    columnaInfo.style.width="";
+    columnaInfo.style.gridColumn="";
+  }
+}
+if(contenidoImagen){
+  contenidoImagen.classList.toggle("sesion4-pagina3-activa",esSesion4Pagina3);
+}
+if(sesion4Pagina3Especial){
+  sesion4Pagina3Especial.setAttribute("aria-hidden",esSesion4Pagina3?"false":"true");
+}
+const tablaPagina4=document.getElementById("tablaPagina4");
+const perfilComparacion=document.getElementById("perfilComparacionSesion3");
+const esPerfilComparacion=(sesionActual===3 && paginaActual===1);
+const esImagenGrandeSesion3Pagina2=(sesionActual===3 && paginaActual===2);
+const esTablaPagina4=(sesionActual===1 && paginaActual===3);
+
+if(contenidoImagen){
+contenidoImagen.style.display=esTablaPagina4?"none":"grid";
+}
+if(tablaPagina4){
+tablaPagina4.style.display=esTablaPagina4?"block":"none";
+}
+if(perfilComparacion){
+perfilComparacion.style.display=esPerfilComparacion?"block":"none";
+}
+const collageSesion3Pagina3=document.getElementById("actividadCollageSesion3Pagina3");
+if(collageSesion3Pagina3){
+collageSesion3Pagina3.style.display=(sesionActual===3 && paginaActual===3)?"block":"none";
+}
+const postFuturoSesion3Pagina4=document.getElementById("actividadPostFuturoSesion3Pagina4");
+if(postFuturoSesion3Pagina4){
+postFuturoSesion3Pagina4.style.display=(sesionActual===3 && paginaActual===4)?"block":"none";
+}
+
+if(esPerfilComparacion){
+if(contenidoImagen){
+contenidoImagen.style.display="none";
+}
+const areaActividad=document.getElementById("areaActividadSesion1");
+if(areaActividad){
+areaActividad.style.display="none";
+}
+return;
+}
+
+const esPostFuturoSesion3Pagina4=(sesionActual===3 && paginaActual===4);
+if(esPostFuturoSesion3Pagina4){
+if(contenidoImagen){
+contenidoImagen.style.display="none";
+contenidoImagen.classList.remove("imagen-grande-sesion3-pagina2");
+}
+const marco=document.querySelector(".carrusel-marco");
+if(marco)marco.classList.remove("modo-imagen-grande");
+const flechas=document.querySelectorAll(".flecha-carrusel");
+flechas.forEach(function(f){f.style.display="none";});
+const controles=document.getElementById("controlesCarrusel");
+if(controles)controles.style.display="none";
+const indicador=document.getElementById("indicadorImagen");
+if(indicador)indicador.style.display="none";
+const info=document.querySelector(".info-imagen");
+if(info)info.style.display="none";
+const collage=document.getElementById("actividadCollageSesion3Pagina3");
+if(collage)collage.style.display="none";
+const post=document.getElementById("actividadPostFuturoSesion3Pagina4");
+if(post)post.style.display="block";
+return;
+}
+
+const esCollageSesion3Pagina3=(sesionActual===3 && paginaActual===3);
+if(esCollageSesion3Pagina3){
+if(contenidoImagen){
+contenidoImagen.style.display="none";
+contenidoImagen.classList.remove("imagen-grande-sesion3-pagina2");
+}
+const marco=document.querySelector(".carrusel-marco");
+if(marco)marco.classList.remove("modo-imagen-grande");
+const flechas=document.querySelectorAll(".flecha-carrusel");
+flechas.forEach(function(f){f.style.display="none";});
+const controles=document.getElementById("controlesCarrusel");
+if(controles)controles.style.display="none";
+const indicador=document.getElementById("indicadorImagen");
+if(indicador)indicador.style.display="none";
+const info=document.querySelector(".info-imagen");
+if(info)info.style.display="none";
+
+const perfil=document.getElementById("perfilComparacionSesion3");
+if(perfil)perfil.style.display="none";
+const area=document.getElementById("areaActividadSesion1");
+if(area)area.style.display="none";
+const tabla=document.getElementById("tablaPagina4");
+if(tabla)tabla.style.display="none";
+
+const collage=document.getElementById("actividadCollageSesion3Pagina3");
+if(collage)collage.style.display="block";
+
+/* Evita que la imagen fija de la página 2 se reutilice en la página 3. */
+imagenesCarrusel=imagenesCarruselBase;
+imagenActual=0;
+return;
+}
+
+if(esImagenGrandeSesion3Pagina2){
+if(contenidoImagen){
+contenidoImagen.style.display="block";
+contenidoImagen.classList.add("imagen-grande-sesion3-pagina2");
+}
+const marco=document.querySelector(".carrusel-marco");
+const flechas=document.querySelectorAll(".flecha-carrusel");
+const controles=document.getElementById("controlesCarrusel");
+const indicador=document.getElementById("indicadorImagen");
+const info=document.querySelector(".info-imagen");
+
+if(marco){
+marco.classList.add("modo-imagen-grande");
+}
+flechas.forEach(function(f){f.style.display="none";});
+if(controles)controles.style.display="none";
+if(indicador)indicador.style.display="none";
+if(info)info.style.display="none";
+}else{
+const marco=document.querySelector(".carrusel-marco");
+const flechas=document.querySelectorAll(".flecha-carrusel");
+const controles=document.getElementById("controlesCarrusel");
+const indicador=document.getElementById("indicadorImagen");
+const info=document.querySelector(".info-imagen");
+
+if(contenidoImagen){
+contenidoImagen.classList.remove("imagen-grande-sesion3-pagina2");
+}
+if(marco){
+marco.classList.remove("modo-imagen-grande");
+}
+flechas.forEach(function(f){f.style.display="";});
+if(controles)controles.style.display="";
+if(indicador)indicador.style.display="";
+if(info)info.style.display="";
+}
+
+if(esTablaPagina4){
+return;
+}
+
+/*
+   El carrusel solo cambia imágenes en las páginas normales.
+   La información del lado permanece fija.
+   Únicamente en las páginas de ACTIVIDAD la información cambia
+   junto con la imagen seleccionada.
+*/
+const esActividad=(paginasActividad[sesionActual]===paginaActual);
+
+if(sesionActual===3 && paginaActual===2){
+imagenesCarrusel=[imagenSesion3Pagina2];
+}else if(sesionActual===2 && paginaActual===1){
+imagenesCarrusel=imagenesSesion2Pagina1;
+}else if(sesionActual===2 && paginaActual===2){
+imagenesCarrusel=imagenesSesion2Pagina2;
+}else if(sesionActual===2 && paginaActual===3){
+imagenesCarrusel=imagenesSesion2Pagina3;
+}else if(sesionActual===2 && paginaActual===4){
+imagenesCarrusel=imagenesSesion2Pagina4;
+}else if(sesionActual===2 && paginaActual===5){
+imagenesCarrusel=imagenesSesion2Pagina5;
+}else if(sesionActual===1 && paginaActual===1){
+imagenesCarrusel=imagenesSesion1Pagina2;
+}else if(sesionActual===1 && paginaActual===2){
+imagenesCarrusel=imagenesSesion1Pagina3;
+}else if(sesionActual===1 && paginaActual===4){
+imagenesCarrusel=imagenesActividadSesion1;
+}else if(sesionActual===4 && paginaActual===1){
+imagenesCarrusel=imagenesSesion4Pagina1;
+}else{
+imagenesCarrusel=imagenesCarruselBase;
+}
+
+if(imagenActual>=imagenesCarrusel.length){
+imagenActual=0;
+}
+
+const imagen=imagenesCarrusel[imagenActual];
+
+document.getElementById("imagenSesion").src=imagen.src;
+document.getElementById("imagenSesion").alt=imagen.titulo;
+
+document.getElementById("indicadorImagen").textContent=
+"Imagen "+(imagenActual+1)+" de "+imagenesCarrusel.length+
+" · Haz clic para ampliar";
+
+const subtitulo=document.getElementById("subtituloImagen");
+const parrafo=document.getElementById("parrafoSesion2");
+const esActividadSesion1Pagina4=(sesionActual===1 && paginaActual===4);
+
+if(esActividadSesion1Pagina4){
+subtitulo.style.display="";
+parrafo.style.display="";
+}else{
+subtitulo.style.display="";
+parrafo.style.display="";
+}
+
+const areaActividadGeneral=document.getElementById("areaActividadSesion1");
+const plantillaActividad3General=document.getElementById("plantillaActividad3Sesion1");
+const instruccionesActividad3General=document.getElementById("instruccionesActividad3Sesion1");
+if(areaActividadGeneral){
+areaActividadGeneral.style.display=esActividadSesion1Pagina4 && imagenActual!==2?"block":"none";
+}
+if(plantillaActividad3General){
+plantillaActividad3General.style.display=esActividadSesion1Pagina4 && imagenActual===2?"block":"none";
+}
+if(instruccionesActividad3General){
+instruccionesActividad3General.style.display=esActividadSesion1Pagina4 && imagenActual===2?"block":"none";
+}
+
+if(esActividad){
+/* Solo las páginas de actividades cambian información al cambiar de imagen. */
+const actividad=informacionActividadPorSesion[sesionActual][imagenActual] ||
+informacionActividadPorSesion[sesionActual][0];
+
+subtitulo.style.display="";
+subtitulo.textContent=actividad.titulo;
+subtitulo.style.color="#8fc9df";
+subtitulo.style.fontWeight="800";
+parrafo.textContent=actividad.texto;
+
+const areaActividad=document.getElementById("areaActividadSesion1");
+const plantillaActividad3=document.getElementById("plantillaActividad3Sesion1");
+if(areaActividad){
+areaActividad.style.display=(sesionActual===1 && paginaActual===4 && imagenActual!==2)?"block":"none";
+const etiqueta=document.getElementById("etiquetaAreaActividad");
+const entrada=document.getElementById("entradaActividad");
+if(etiqueta && entrada){
+if(imagenActual===0){
+etiqueta.textContent="Escribe los valores que utilizaste:";
+entrada.placeholder="Escribe aquí tus valores...";
+entrada.rows=4;
+}else if(imagenActual===1){
+etiqueta.textContent="Escriban 5 reglas para usar redes sociales con respeto y empatía:";
+entrada.placeholder="Escribe aquí las 5 reglas...";
+entrada.rows=7;
+}
+}
+}
+if(plantillaActividad3){
+plantillaActividad3.style.display=(sesionActual===1 && paginaActual===4 && imagenActual===2)?"block":"none";
+}
+const instruccionesActividad3=document.getElementById("instruccionesActividad3Sesion1");
+if(instruccionesActividad3){
+instruccionesActividad3.style.display=(sesionActual===1 && paginaActual===4 && imagenActual===2)?"block":"none";
+}
+}else if(sesionActual===2 && paginaActual===5){
+/* Información fija de la página 5 de la Sesión 2: cambia la imagen, no este contenido. */
+subtitulo.style.display="";
+subtitulo.textContent="Estrategias en modo defensa";
+parrafo.innerHTML=
+'<p><strong>• Aplica el ghosting:</strong> Si no respondes a sus críticas e insultos, les quitas el poder.</p>' +
+'<p><strong>• Usa el botón de bloqueo / silenciar:</strong> No es "ser débil", se trata de cuidar tu paz mental. Si consideras que una persona tiene una actitud tóxica, sácala de tu feed*.</p>' +
+'<p><strong>• Reporta:</strong> Si la situación pasa de una burla a acoso o amenazas, usa las herramientas de la plataforma.</p>' +
+'<p><strong>• No dejes que te definan:</strong> Recuerda que un comentario de alguien desconocido no dice quién eres tú, sino quién es esa persona.</p>';
+}else if(sesionActual===2 && paginaActual===1){
+/* Información fija de la página 1 de la Sesión 2: cambia la imagen, no este contenido. */
+subtitulo.style.display="";
+subtitulo.textContent="Opiniones, respeto y convivencia";
+parrafo.textContent="Al principio, algunas respuestas intentan discutir la idea, pero pronto aparecen mensajes burlones, apodos ofensivos y comentarios agresivos dirigidos ya no a lo que dijo, sino a su persona. Ante esta situación, las opiniones y comentarios se dividen entre las personas que defienden el derecho a decir lo que se piensa, incluso si resulta ofensivo, y quienes publican que esos comentarios cruzan el límite y afectan la dignidad, el respeto y la convivencia.";
+}else if(sesionActual===2 && paginaActual===2){
+/* Información fija de la página 2 de la Sesión 2: cambia la imagen, no este contenido. */
+subtitulo.style.display="";
+subtitulo.textContent="Información sobre las personas hater";
+parrafo.innerHTML='<p>una persona hater, es que la persona odiadora solo quiere generar drama con juicios desfavorables sin base sólida o comentarios negativos y destructivos.</p><p>Su objetivo principal es destacarse por su actitud negativa y destructiva hacia otras personas, a través de comentarios, publicaciones o mensajes para criticar, ofender o menospreciar, sembrar dudas o insatisfacción sobre la imagen que proyecta alguna persona, o generar y alimentar controversia y debates acalorados, lo que suele provocar discusiones intensas, atraer la atención de otros usuarios y la propagación de su actitud negativa.</p>';
+}else if(sesionActual===2 && paginaActual===3){
+/* Información fija de la página 3 de la Sesión 2: cambia la imagen, no este contenido. */
+subtitulo.style.display="none";
+parrafo.innerHTML=
+'<p><strong>•Envidia o anhelo de imitar e incluso superar las acciones ajenas:</strong> A veces les provoca enojo o molestia que tú te atrevas a hacer cosas que ellas no pueden o no se animan a hacer, por lo que canalizan su envidia en forma de críticas negativas.</p>' +
+'<p><strong>•El "escudo" del anonimato:</strong> el anonimato que ofrece Internet les permite expresarse sin temor a las repercusiones personales. Sienten que, como nadie sabe quiénes son, pueden decir las cosas más negativas sin enfrentar las consecuencias.</p>' +
+'<p><strong>•Desahogar su frustración personal o insatisfacción con la propia vida:</strong> El expresar su hostilidad y negatividad hacia otras personas puede ser un alivio momentáneo a su propia frustración.</p>';
+}else if(sesionActual===2 && paginaActual===4){
+/* Información fija de la página 4 de la Sesión 2: cambia la imagen, no este contenido. */
+subtitulo.style.display="none";
+parrafo.innerHTML=
+'<p><strong>1 Bajón emocional:</strong> Los comentarios crueles pueden herir tus sentimientos y, si no paran y son públicos, pueden provocar tristeza, angustia y hacer tambalear tu autoestima.</p>' +
+'<p><strong>2 Vivir en modo "alerta" (estrés y ansiedad):</strong> Ser el blanco de una persona hater te pone los nervios de punta. Ese aumento de estrés te quita la paz mental y afecta tu salud física y emocional.</p>' +
+'<p><strong>3 Tu imagen bajo la lupa:</strong> Lo que los haters dicen puede manchar tu reputación e influir en cómo te ven las demás personas; eso puede traerte problemas con tus amistades o proyectos futuros.</p>' +
+'<p><strong>4. Ganas de desaparecer de Internet:</strong> Es supercomún que quieras cerrar tus cuentas o dejar de publicar lo que te gusta, con lo que limitas tu libertad para expresarte y te alejas de las comunidades donde antes te gustaba estar.</p>';
+}else if(sesionActual===1 && paginaActual===1){
+/* Información fija de la página 2: cambia la imagen, no este contenido. */
+subtitulo.style.display="";
+subtitulo.textContent="Respeto en redes sociales";
+parrafo.textContent="El respeto en redes sociales es fundamental para proteger la dignidad humana. Esto significa tratar a las demás personas como nos gustaría que se nos tratara y observar la búsqueda de los principios del bien común, la justicia, la libertad y la integridad.";
+}else if(sesionActual===1 && paginaActual===2){
+/* Información fija de la página 3: cambia la imagen, no este contenido. */
+subtitulo.style.display="";
+subtitulo.textContent="Tres verdades incómodas, pero reales";
+parrafo.innerHTML=
+'<p><strong>1 • El mito del "algoritmo malvado"</strong>: culpamos al algoritmo por mostrarnos peleas, pero el algoritmo solo es un espejo. Si le das like al drama o te quedas leyendo un hilo de insultos, la aplicación (app) te dará más de eso, produciéndose un bucle infinito. Y, aunque cambies de red social, el problema no se soluciona porque las formas de relacionarse al navegar siguen siendo las mismas.</p>' +
+'<p><strong>2 • La "deshumanización del avatar"</strong>: el anonimato frente a la pantalla nos hace creer que las acciones no tienen consecuencias reales. Esta desinhibición digital alimenta las faltas de respeto y se vuelve "normal".</p>' +
+'<p><strong>3 • La "mala onda" es "contagiosa"</strong>: lo que ves en pantalla es un reflejo de actitudes que ya existen en la vida real. Las redes sociales no inventan la toxicidad; solo la hacen más visible y frecuente, amplificándola. Y, si sobrevive, es porque las personas la alimentan al participar.</p>';
+}else if(sesionActual===1 && paginaActual===1){
+subtitulo.style.display="";
+subtitulo.textContent="Espacio para aprender";
+parrafo.textContent="Contenido introductorio de la sesión sobre dignidad humana y respeto en las redes sociales.";
+}else if(sesionActual===4 && paginaActual===3){
+/* Contenido exclusivo de Sesión 4, página 3. */
+subtitulo.style.display="none";
+parrafo.innerHTML=
+'<p>Las redes sociales no son solo apps, son un espacio para fortalecer la convivencia. Compartir algo falso daña el ambiente de la escuela; cuidar las redes es como "cuidar el aire que respiramos, pero en versión digital”.</p>';
+}else if(sesionActual===4 && paginaActual===1){
+/* Contenido exclusivo de Sesión 4, página 1. */
+subtitulo.style.display="none";
+parrafo.innerHTML=
+'<p>1. <strong>Más que una app: un espacio para ser</strong><br>Son espacios digitales donde podemos hablar con gente de todo el mundo, aprender de otras culturas y compartir lo que pensamos. A través de ellas, podemos participar activamente en la sociedad y fortalecer la convivencia en diferentes contextos sociales y culturales.</p>' +
+'<p>2. <strong>Libertad con responsabilidad</strong><br>Cada publicación, comentario o incluso un like genera un efecto en las demás personas. Ejercer nuestra libertad en Internet significa ser responsables y reconocer que lo que hacemos influye directamente en la convivencia dentro de la escuela y en nuestra comunidad.</p>' +
+'<p>3. <strong>El checklist del bien común</strong><br>• <span style="color:#4b91c9;font-weight:800;">Respeto a la diversidad:</span> Valora las distintas culturas y expresiones de quienes te rodean.<br>• <span style="color:#4b91c9;font-weight:800;">Cero daños:</span> Evita difundir mensajes que puedan lastimar a otras personas.<br>• <span style="color:#4b91c9;font-weight:800;">Valores en acción:</span> Promueve la empatía, la honestidad y la solidaridad en cada comentario.</p>';
+}else if(sesionActual===1 && informacionFijaSesion1[paginaActual]){
+/* Información fija de las demás páginas de la Sesión 1. */
+subtitulo.style.display="";
+const fija=informacionFijaSesion1[paginaActual];
+subtitulo.textContent=fija.titulo;
+parrafo.textContent=fija.texto;
+}else{
+/* En las demás sesiones la información permanece fija mientras cambia la imagen. */
+subtitulo.style.display="";
+subtitulo.textContent="Espacio para aprender";
+parrafo.textContent="Contenido de la sesión. Observa las imágenes y relaciona lo aprendido con las indicaciones del manual.";
+}
+
+const controles=document.getElementById("controlesCarrusel");
+controles.innerHTML="";
+
+imagenesCarrusel.forEach(function(item,index){
+const boton=document.createElement("button");
+boton.type="button";
+boton.className="punto"+(index===imagenActual?" activo":"");
+boton.setAttribute("aria-label","Ver imagen "+(index+1));
+boton.onclick=function(){
+imagenActual=index;
+actualizarImagen();
+};
+controles.appendChild(boton);
+});
+}
+
+function cambiarImagen(direccion){
+imagenActual+=direccion;
+
+if(imagenActual<0){
+imagenActual=imagenesCarrusel.length-1;
+}
+
+if(imagenActual>=imagenesCarrusel.length){
+imagenActual=0;
+}
+
+actualizarImagen();
+
+if(document.getElementById("modalImagen").classList.contains("abierto")){
+actualizarModal();
+}
+}
+
+function abrirImagen(){
+const modal=document.getElementById("modalImagen");
+
+modal.classList.add("abierto");
+
+actualizarModal();
+
+document.body.style.overflow="hidden";
+}
+
+function actualizarModal(){
+const imagen=imagenesCarrusel[imagenActual];
+
+document.getElementById("imagenModal").src=imagen.src;
+
+document.getElementById("imagenModal").alt=
+"Imagen ampliada";
+}
+
+function cerrarImagen(event){
+if(event &&
+event.target!==document.getElementById("modalImagen")){
+return;
+}
+
+document.getElementById("modalImagen").classList.remove("abierto");
+
+document.body.style.overflow="";
+}
+
+document.addEventListener("DOMContentLoaded",function(){
+
+const botonSesiones=
+document.getElementById("botonSesiones");
+
+if(botonSesiones){
+botonSesiones.addEventListener("click",function(event){
+event.stopPropagation();
+abrirMenu();
+});
+}
+
+document.querySelectorAll("[data-sesion]").forEach(function(boton){
+boton.addEventListener("click",function(event){
+event.stopPropagation();
+
+const numero=parseInt(
+boton.getAttribute("data-sesion")
+);
+
+seleccionarSesion(numero);
+});
+});
+
+document.querySelectorAll("[data-lista-sesion]").forEach(function(boton){
+boton.addEventListener("click",function(){
+const numero=parseInt(
+boton.getAttribute("data-lista-sesion")
+);
+
+seleccionarSesion(numero);
+});
+});
+
+document.addEventListener("click",function(event){
+const menu=document.querySelector(".menu-sesiones");
+
+if(menu && !menu.contains(event.target)){
+cerrarMenu();
+}
+});
+
+const buscador=document.getElementById("buscador");
+
+if(buscador){
+buscador.addEventListener("input",buscar);
+}
+});
+
+function buscar(){
+const texto=document.getElementById("buscador").value
+.toLowerCase()
+.trim();
+
+const resultados=document.getElementById("resultadosBusqueda");
+
+if(!texto){
+resultados.classList.remove("visible");
+resultados.innerHTML="";
+return;
+}
+
+const encontrados=[];
+
+Object.keys(sesiones).forEach(function(numero){
+const titulo=sesiones[numero].titulo.toLowerCase();
+
+if(titulo.includes(texto)){
+encontrados.push({
+sesion:Number(numero),
+titulo:sesiones[numero].titulo,
+detalle:"Título de la sesión"
+});
+}
+
+const titulos=[
+...obtenerTitulosParaBusqueda(Number(numero))
+];
+
+titulos.forEach(function(titulo,index){
+if(titulo.toLowerCase().includes(texto)){
+encontrados.push({
+sesion:Number(numero),
+pagina:index+1,
+titulo:titulo,
+detalle:"Página "+(index+1)
+});
+}
+});
+});
+
+resultados.innerHTML="";
+
+if(encontrados.length===0){
+resultados.innerHTML=
+'<div class="resultado">No se encontraron resultados.</div>';
+resultados.classList.add("visible");
+return;
+}
+
+encontrados.slice(0,8).forEach(function(item){
+
+const div=document.createElement("div");
+div.className="resultado";
+
+div.innerHTML=
+"<strong>"+item.titulo+"</strong>"+
+"<small>Sesión "+item.sesion+
+(item.pagina?" · Página "+item.pagina:"")+
+" · "+item.detalle+"</small>";
+
+div.onclick=function(){
+
+seleccionarSesion(item.sesion);
+
+if(item.pagina){
+paginaActual=item.pagina;
+actualizarSesion();
+}
+
+resultados.classList.remove("visible");
+document.getElementById("buscador").value="";
+
+};
+
+resultados.appendChild(div);
+});
+
+resultados.classList.add("visible");
+}
+
+function obtenerTitulosParaBusqueda(numero){
+const titulos={
+1:["Respeto en redes sociales","Tres verdades incómodas, pero reales","Reflexión","Actividad"],
+2:["Cuando en opinar se convierte en agredir","¿Qué es una persona hater exactamente?","El perfil de la persona Hater","El \"efecto hater\": lo que pasa en tu mundo cuando llega el hate.","Reflexión"],
+3:["Mi perfil real vs Mi perfil digital","Construye tu identidad sin filtros","Collage de mi perfil","Cierre"],
+4:["Redes sociales para un bien común","El filtro del bien común","Viral o fatal: el tribunal del bien común"],
+5:["Normas de convivencia","Redes sociales","Huella digital","¿Abre o cierra puertas?","Reflexión","Cierre"],
+6:["Colectividad positiva","Participación responsable","Respeto","Comunicación","Colaboración","Convivencia","Actividad","Reflexión","Aplicación","Trabajo en comunidad","Aprendizaje","Evaluación","Cierre"]
+};
+
+return titulos[numero]||[];
+}
+
+document.addEventListener("keydown",function(event){
+
+if(event.key==="Escape"){
+cerrarImagen();
+}
+
+const modal=document.getElementById("modalImagen");
+
+if(modal && modal.classList.contains("abierto")){
+
+if(event.key==="ArrowLeft"){
+cambiarImagen(-1);
+}
+
+if(event.key==="ArrowRight"){
+cambiarImagen(1);
+}
+}
+});
+
+window.addEventListener("load",function(){
+actualizarSesion();
+});
+</script>
+
+
+<script id="hobbies-mail-script">
+function enviarHobbiesPorCorreo(){
+  const area = document.querySelector('#hobbiesActividad textarea, textarea.hobbies-editor, .hobbies-editor textarea');
+  const texto = area ? area.value : '';
+  const asunto = encodeURIComponent('Actividad Hobbies - Mi primera onda');
+  const cuerpo = encodeURIComponent(
+    texto.trim()
+      ? 'Mi respuesta de la Actividad Hobbies:\n\n' + texto
+      : 'Mi respuesta de la Actividad Hobbies:'
+  );
+  window.location.href = 'mailto:?subject=' + asunto + '&body=' + cuerpo;
+}
+</script>
+
+
+<style id="activar-carrusel-puertas-s5-p2">
+/* ==========================================================
+   SOLO SESIÓN 5 — PÁGINA 2
+   Carrusel "Publicaciones para analizar"
+   ========================================================== */
+#sesion5Pagina2Actividad .puertas-carrusel{
+  display:block !important;
+  visibility:visible !important;
+  opacity:1 !important;
+  width:100% !important;
+  min-height:150px !important;
+}
+#sesion5Pagina2Actividad .puertas-track{
+  display:flex !important;
+  visibility:visible !important;
+  opacity:1 !important;
+  width:100% !important;
+}
+#sesion5Pagina2Actividad .puerta-slide{
+  display:flex !important;
+  visibility:visible !important;
+  opacity:1 !important;
+  min-width:100% !important;
+}
+#sesion5Pagina2Actividad .puertas-indicadores{
+  display:flex !important;
+  visibility:visible !important;
+  opacity:1 !important;
+}
+#sesion5Pagina2Actividad .puertas-ayuda{
+  display:block !important;
+  visibility:visible !important;
+  opacity:1 !important;
+}
+</style>
+
+</body>
+</html>
